@@ -1,9 +1,13 @@
 package aadd.zeppelinum;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import aadd.persistencia.dto.PlatoDTO;
+import aadd.persistencia.dto.RestauranteDTO;
+import aadd.persistencia.dto.UsuarioDTO;
 import aadd.persistencia.jpa.EntityManagerHelper;
 import aadd.persistencia.jpa.bean.Plato;
 import aadd.persistencia.jpa.bean.Restaurante;
@@ -131,5 +135,41 @@ public class ServicioGestionPlataforma {
             }
             em.close();
         }
+    }
+    
+    public boolean isUsuarioRegistrado(String email) {
+        List<UsuarioDTO> u = UsuarioDAO.getUsuarioDAO().findByEmail(email);
+        if(u != null && !u.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    public UsuarioDTO login(String email, String clave) { 
+        List<UsuarioDTO> usuarios = UsuarioDAO.getUsuarioDAO().findByEmailClave(email, clave);
+        if(usuarios.isEmpty()) {
+            System.out.println("Usuario no encontrado, email o clave incorrectos");
+            return null;
+        }
+        else {
+            System.out.println("Usuario logueado "+usuarios.get(0).getNombre());
+            return usuarios.get(0);
+        }
+    }
+    
+    public List<PlatoDTO> getMenuByRestaurante(Integer restaurante) {
+        return PlatoDAO.getPlatoDAO().findPlatosDisponiblesByRestaurante(restaurante);
+    }
+    
+    public List<RestauranteDTO> getRestaurantesByFiltros(String keyword, boolean verNovedades, boolean ordernarByValoracion, boolean ceroIncidencias){
+        if(keyword != null && keyword.isBlank()) {
+            keyword = null;
+        }
+        LocalDate fecha = null;
+        if(verNovedades) { // filtramos por aquellos dados de alta la última semana
+            fecha = LocalDate.now();
+            fecha = fecha.minusWeeks(1);
+        }
+        return RestauranteDAO.getRestauranteDAO().findRestauranteByFiltros(keyword, fecha, ordernarByValoracion, ceroIncidencias);
     }
 }

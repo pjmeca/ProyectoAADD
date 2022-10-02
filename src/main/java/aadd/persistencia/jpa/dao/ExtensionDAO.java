@@ -3,6 +3,10 @@ package aadd.persistencia.jpa.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
 
 import aadd.persistencia.jpa.EntityManagerHelper;
 
@@ -39,7 +43,13 @@ public abstract class ExtensionDAO<T> implements DAO<T> {
 
     @Override
     public List<T> getAll() {
-        return null;
-        // TODO Auto-generated method stub
+    	try {
+            final String queryString = " SELECT model from " + name + " model ";
+            Query query = EntityManagerHelper.getEntityManager().createQuery(queryString);
+            query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+            return query.getResultList();
+        } catch (RuntimeException re) {
+            throw re;
+        }
     }
 }

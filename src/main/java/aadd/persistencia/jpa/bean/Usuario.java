@@ -6,6 +6,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="usuario")
+@NamedQueries({
+    @NamedQuery(name = "Usuario.findByEmailClave", query = " SELECT u FROM Usuario u WHERE u.email = :email and u.clave = :clave "),
+    @NamedQuery(name = "Usuario.findByEmail", query = " SELECT u FROM Usuario u WHERE u.email = :email ")
+})
 public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

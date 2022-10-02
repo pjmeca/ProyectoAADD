@@ -5,6 +5,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="plato")
+@NamedQueries({
+    @NamedQuery(name = "Plato.findPlatosDisponiblesByRestaurante", query = " SELECT p FROM Plato p WHERE p.disponibilidad = true and p.restaurante.id = :restaurante ")
+})
 public class Plato implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
