@@ -6,10 +6,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.*;
-
+/**
+ * Entity implementation class for Entity: Restaurante
+ *
+ */
 @Entity
 @Table(name = "restaurante")
+@NamedQueries({
+    @NamedQuery(name = "Restaurante.findRestaurantesByUsuarioResponsable", query = " SELECT r FROM Restaurante r WHERE r.responsable = :responsable ")
+})
 public class Restaurante implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -30,8 +39,8 @@ public class Restaurante implements Serializable {
     private Usuario responsable;
     @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL)
     private List<Plato> platos;
-
-    private static final long serialVersionUID = 1L;
+    @ManyToMany(mappedBy = "restaurantes")
+    private List<CategoriaRestaurante> categorias;
 
     public Restaurante() {
         super();
@@ -100,5 +109,13 @@ public class Restaurante implements Serializable {
 
 	public void setPlatos(List<Plato> platos) {
 		this.platos = platos;
+	}
+	
+	public List<CategoriaRestaurante> getCategorias() {
+		return new LinkedList<>(categorias);
+	}
+
+	public void setCategorias(List<CategoriaRestaurante> categorias) {
+		this.categorias = categorias;
 	}
 }

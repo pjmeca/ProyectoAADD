@@ -29,7 +29,7 @@ class Test {
 	void crearRestaurantePlato() {
 		ServicioGestionPlataforma servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();
 
-		Integer rest = servicio.registrarRestaurante("La periquita", 1);
+		Integer rest = servicio.registrarRestaurante("La periquita", 1, null);
 		assertTrue(rest != null);
 		boolean exito = servicio.nuevoPlato("Marmitako de bonito", "plato de bonito, patatas y cebolla con verduras",
 				20d, rest);

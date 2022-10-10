@@ -8,10 +8,14 @@ import javax.persistence.*;
 @Table(name="usuario")
 @NamedQueries({
     @NamedQuery(name = "Usuario.findByEmailClave", query = " SELECT u FROM Usuario u WHERE u.email = :email and u.clave = :clave "),
-    @NamedQuery(name = "Usuario.findByEmail", query = " SELECT u FROM Usuario u WHERE u.email = :email ")
+    @NamedQuery(name = "Usuario.findByEmail", query = " SELECT u FROM Usuario u WHERE u.email = :email "),
+    @NamedQuery(name = "Usuario.findByValidadoAndTipo", query = " SELECT u FROM Usuario u WHERE u.tipo = :tipo and u.validado = :validado")
 })
 public class Usuario implements Serializable {
-    @Id
+	
+    private static final long serialVersionUID = 1L;
+    
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;

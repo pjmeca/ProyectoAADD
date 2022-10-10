@@ -7,7 +7,9 @@ import aadd.persistencia.jpa.bean.TipoUsuario;
 
 public class UsuarioDTO implements Serializable{
 
-    protected Integer id;
+    private static final long serialVersionUID = 1L;
+    
+	protected Integer id;
     protected String nombre;
     protected String apellidos;
     protected TipoUsuario tipo;

@@ -3,12 +3,9 @@ package aadd.persistencia.jpa.dao;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Query;
-
 import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
-
 import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.jpa.EntityManagerHelper;
 import aadd.persistencia.jpa.bean.Restaurante;
@@ -70,4 +67,14 @@ public class RestauranteDAO extends ExtensionDAO<Restaurante> {
             throw re;
         }
     }
+    
+    public List<RestauranteDTO> findRestaurantesByUsuarioResponsable(Integer responsable) {
+	    try {
+	        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Restaurante.findRestaurantesByUsuarioResponsable");
+	        query.setParameter("responsable", responsable);
+	        return transformarToDTO(query.getResultList());
+	    } catch (RuntimeException re) {
+	        throw re;
+	    }
+	}
 }

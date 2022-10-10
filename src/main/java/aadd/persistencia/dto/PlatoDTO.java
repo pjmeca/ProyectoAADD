@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 public class PlatoDTO implements Serializable{
 
-    protected Integer id;
+    private static final long serialVersionUID = 1L;
+    
+	protected Integer id;
     protected String descripcion;
     protected String titulo;
     protected Double precio;

@@ -7,6 +7,7 @@ import javax.persistence.Query;
 
 import aadd.persistencia.dto.UsuarioDTO;
 import aadd.persistencia.jpa.EntityManagerHelper;
+import aadd.persistencia.jpa.bean.TipoUsuario;
 import aadd.persistencia.jpa.bean.Usuario;
 
 public class UsuarioDAO extends ExtensionDAO<Usuario> {
@@ -51,4 +52,15 @@ public class UsuarioDAO extends ExtensionDAO<Usuario> {
         }
         return users;
     }
+    
+    public List<UsuarioDTO> findUsuariosNoValidadosAndTipoRestaurante() {
+	    try {
+	        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Usuario.findByValidadoAndTipo");
+	        query.setParameter("tipo", TipoUsuario.RESTAURANTE);
+	        query.setParameter("validado", false);
+	        return transformarToDTO(query.getResultList());
+	    } catch (RuntimeException re) {
+	        throw re;
+	    }
+	}
 }
