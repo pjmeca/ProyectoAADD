@@ -1,10 +1,14 @@
 package aadd.zeppelinum;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+
+import com.mongodb.client.model.geojson.Point;
+import com.mongodb.client.model.geojson.Position;
 
 import aadd.persistencia.dto.PlatoDTO;
 import aadd.persistencia.dto.RestauranteDTO;
@@ -19,6 +23,8 @@ import aadd.persistencia.jpa.dao.CategoriaRestauranteDAO;
 import aadd.persistencia.jpa.dao.PlatoDAO;
 import aadd.persistencia.jpa.dao.RestauranteDAO;
 import aadd.persistencia.jpa.dao.UsuarioDAO;
+import aadd.persistencia.mongo.bean.Direccion;
+import aadd.persistencia.mongo.dao.DireccionDAO;
 
 public class ServicioGestionPlataforma {
 
@@ -82,7 +88,7 @@ public class ServicioGestionPlataforma {
         }
     }
 
-    public Integer registrarRestaurante(String nombre, Integer responsable, List<Integer> categorias) {
+    public Integer registrarRestaurante(String nombre, Integer responsable, String calle, String codigoPostal,Integer numero, String ciudad, Double latitud, Double longitud, List<Integer> categorias) {
 
         EntityManager em = EntityManagerHelper.getEntityManager();
         try {
@@ -96,17 +102,29 @@ public class ServicioGestionPlataforma {
             r.setNumPenalizaciones(0);
             r.setNumValoraciones(0);
             
-            CategoriaRestaurante cr ;
             List<CategoriaRestaurante> lista = new LinkedList<CategoriaRestaurante>();
-            for(Integer i : categorias) {
-            	 cr = CategoriaRestauranteDAO.getCategoriaRestauranteDAO().findById(i);
-            	 if(cr!=null) {
-            		 lista.add(cr);
-            	 }
+            if(categorias != null) {
+	            for(Integer i : categorias) {
+	            	CategoriaRestaurante cr = CategoriaRestauranteDAO.getCategoriaRestauranteDAO().findById(i);
+					if (cr != null) {
+						lista.add(cr);
+					}
+	            }
             }
             r.setCategorias(lista);
 
             RestauranteDAO.getRestauranteDAO().save(r, em);
+            
+            em.flush(); // forzamos el insert para obtener el id de MySQL
+            Direccion d = new Direccion();
+            d.setCalle(calle);
+            d.setCiudad(ciudad);
+            d.setCodigoPostal(codigoPostal);
+            d.setCoordenadas(new Point(new Position(longitud, latitud)));
+            d.setNumero(numero);
+            d.setRestaurante(r.getId());
+
+            DireccionDAO.getDireccionDAO().save(d);
             
             em.getTransaction().commit();
             return r.getId();
@@ -259,4 +277,33 @@ public class ServicioGestionPlataforma {
             em.close();
         }
     }
+    
+    public List<RestauranteDTO> getRestaurantesByCercanía(Double latitud, Double longitud, int limite, int skip){       
+        List<Direccion> direcciones = DireccionDAO.getDireccionDAO().findOrdenadoPorCercania(latitud, longitud, limite, skip);
+        
+        RestauranteDAO restauranteDAO = RestauranteDAO.getRestauranteDAO();
+        List<RestauranteDTO> restaurantes = new ArrayList<>();
+        for(Direccion d:direcciones) {
+            Restaurante r = restauranteDAO.findById(d.getRestaurante());
+            Position coordenadas = d.getCoordenadas().getCoordinates();
+            
+            RestauranteDTO restauranteDTO = new RestauranteDTO(r.getId(), r.getNombre(), r.getValoracionGlobal(),coordenadas.getValues().get(0), coordenadas.getValues().get(1),
+                    d.getCalle(), d.getCodigoPostal(),
+                    d.getCiudad(),d.getNumero());
+            restaurantes.add(restauranteDTO);
+        }
+        return restaurantes;        
+    }
+    
+    public RestauranteDTO getDatosRestaurante(RestauranteDTO restaurante) { 
+        Direccion d = DireccionDAO.getDireccionDAO().findByRestaurante(restaurante.getId());
+        Position coordenadas = d.getCoordenadas().getCoordinates();     
+        restaurante.setLongitud(coordenadas.getValues().get(0));
+        restaurante.setLatitud(coordenadas.getValues().get(1));
+        restaurante.setCalle(d.getCalle());
+        restaurante.setCiudad(d.getCiudad());
+        restaurante.setCodigoPostal(d.getCodigoPostal());
+        restaurante.setNumero(d.getNumero());       
+        return restaurante;
+}
 }
