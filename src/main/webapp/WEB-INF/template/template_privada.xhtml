@@ -14,13 +14,15 @@
 
     <h:outputStylesheet name="assets/css/main.css" />
     <h:outputStylesheet library="webjars"
-        name="font-awesome/5.12.0/css/all.min-jsf.css" />
+        name="font-awesome/6.2.0/css/all.min-jsf.css" />
     <h:outputStylesheet library="webjars"
-        name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+        name="font-awesome/6.2.0/css/v4-shims.min-jsf.css" />
 </h:head>
 <h:body class="homepage is-preload">
     <div id="page-wrapper">
-        <ui:include src="/WEB-INF/template/header.xhtml"/>          
+        <ui:include src="/WEB-INF/template/header.xhtml">
+			<ui:param name="#{menuseleccionado}" value="current" />
+		</ui:include>          
         <ui:insert name="metadata" />
         <c:if test="#{not userSessionWeb.login}">
             <h:form id="login">             
