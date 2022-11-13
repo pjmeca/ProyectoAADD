@@ -1,12 +1,14 @@
 package aadd.zeppelinum;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import aadd.persistencia.dto.PedidoDTO;
 import javax.persistence.EntityManager;
-
+import aadd.persistencia.mongo.bean.ItemPedido;
 import org.bson.types.ObjectId;
-
+import aadd.persistencia.mongo.bean.Pedido;
+import aadd.persistencia.mongo.bean.TipoEstado;
 import aadd.persistencia.dto.OpinionDTO;
 import aadd.persistencia.jpa.EntityManagerHelper;
 import aadd.persistencia.jpa.bean.Restaurante;
@@ -15,6 +17,7 @@ import aadd.persistencia.jpa.dao.RestauranteDAO;
 import aadd.persistencia.jpa.dao.UsuarioDAO;
 import aadd.persistencia.mongo.bean.Opinion;
 import aadd.persistencia.mongo.dao.OpinionDAO;
+import aadd.persistencia.mongo.dao.PedidoDAO;
 
 public class ServicioGestionPedido {
     
@@ -26,6 +29,38 @@ public class ServicioGestionPedido {
         }
         return servicio;
     }   
+    
+    public boolean registrarPedido(String cod,Integer usu, Integer res, LocalDateTime fH, LocalDateTime fE, String coment, String datosDir
+    		, Double importe, Integer rep, LocalDateTime fEstado, List<ItemPedido> items) {
+    	PedidoDAO ped = PedidoDAO.getPedidoDAO();
+    	Pedido p = new Pedido(cod,usu,res,fH,fE,coment,datosDir,importe,rep,fEstado,items);
+    	return ped.save(p)!=null;
+    	
+    }
+    
+    public boolean editarEstado(String cod, TipoEstado estado, LocalDateTime fecha) {
+    	return PedidoDAO.getPedidoDAO().editarEstadoById(cod, estado, fecha);
+    }
+    
+    public boolean asignarRepartidor(String cod, Integer rep) {
+    	return PedidoDAO.getPedidoDAO().asignarRepartidorById(cod, rep);
+    }
+    
+    public List<PedidoDTO> findByUsuarioRestaurante(Integer codUsu, Integer codRes){
+    	List<PedidoDTO> dto = new ArrayList<PedidoDTO>();
+    	List<Pedido> peds = PedidoDAO.getPedidoDAO().getByUsuarioRestaurante(codUsu,codRes);
+    	
+    	for(Pedido p:peds) {
+    		PedidoDTO pdto = new PedidoDTO();
+    		pdto.setCliente(p.getCliente());
+    		pdto.setRestaurante(p.getRestaurante());
+    		pdto.setComentarios(p.getComentarios());
+    		pdto.setDatosDireccion(p.getDatosDireccion());
+    		pdto.setImporte(p.getImporte());
+    		dto.add(pdto);
+    	}
+    	return dto;
+    }
     
     public boolean opinar(Integer usuario, Integer restaurante, String comentario, Double valoracion) {
         OpinionDAO opinionDAO = OpinionDAO.getOpinionDAO();
