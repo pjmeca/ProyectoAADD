@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html">
 <body>
 	<section id="header">
 	<h1>
@@ -18,6 +19,16 @@
 			</ul></li>
 		<li class="#{estilo3}"><a
 			href="#{request.contextPath}/usuario/registro.xhtml">Registro</a></li>
+			
+		<li>
+            <h:panelGroup rendered="#{userSessionWeb.isLogin() and userSessionWeb.isAdmin()}">
+            <li class="#{estiloRider}"><a
+            href="#{request.contextPath}/usuario/registro_rider.xhtml">Nuevo Rider</a></li>
+            </h:panelGroup>
+        </li>
+
+		<li class="#{estiloPerfil}"><a
+			href="#{request.contextPath}/usuario/perfilusuario.xhtml">Perfil de usuario</a></li>
 		<li><a href="#{request.contextPath}/logout">Cerrar sesión</a></li>
 	</ul>
 	</nav> <!-- Banner --> </section>

@@ -95,6 +95,10 @@ public class Usuario implements Serializable {
 	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
 	}
+	
+	public boolean isTipo(TipoUsuario tipo) {
+		return this.tipo.equals(tipo);
+	}
 
 	public boolean isValidado() {
 		return validado;

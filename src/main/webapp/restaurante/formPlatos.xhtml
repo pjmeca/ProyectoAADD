@@ -18,8 +18,10 @@
             <br />
             <p:button value="Volver" href="form.xhtml" style="margin-right:5px"
                 icon="fa fa-arrow-left"></p:button>
-            <p:commandButton value="Dar plato de alta" icon="fa fa-utensils"
-                oncomplete="PF('nuevoPlato').show();" update="nuevo"></p:commandButton>
+            <h:panelGroup rendered="#{userSessionWeb.isLogin() and userSessionWeb.isRestaurante()}">
+	            <p:commandButton value="Dar plato de alta" icon="fa fa-utensils"
+	                oncomplete="PF('nuevoPlato').show();" update="nuevo"></p:commandButton>
+	        </h:panelGroup>
             <br />
             <p:messages showDetail="true" id="info" />
             <p:dataTable var="plato" style="prueba"

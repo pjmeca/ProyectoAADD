@@ -64,6 +64,9 @@ public class UsuarioDTO implements Serializable{
 		this.tipo = tipo;
 	}
 
+	public boolean isTipo(TipoUsuario tipo) {
+		return this.tipo.equals(tipo);
+	}
 
 	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;

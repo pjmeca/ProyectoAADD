@@ -117,5 +117,7 @@ public class Restaurante implements Serializable {
 
 	public void setCategorias(List<CategoriaRestaurante> categorias) {
 		this.categorias = categorias;
+		for(CategoriaRestaurante c : categorias)
+			c.addRestaurante(this);
 	}
 }

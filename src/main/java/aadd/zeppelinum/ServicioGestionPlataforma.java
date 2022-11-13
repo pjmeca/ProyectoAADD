@@ -223,6 +223,14 @@ public class ServicioGestionPlataforma {
 			em.close();
 		}
 	}
+	
+	public CategoriaRestaurante getCategoriaById(Integer id) {
+		return (CategoriaRestaurante) CategoriaRestauranteDAO.getCategoriaRestauranteDAO().getById(id);
+	}
+	
+	public List<CategoriaRestaurante> getAllCategorias() {
+		return CategoriaRestauranteDAO.getCategoriaRestauranteDAO().findAll();
+	}
 
 	public boolean isUsuarioRegistrado(String email) {
 		List<UsuarioDTO> u = UsuarioDAO.getUsuarioDAO().findByEmail(email);

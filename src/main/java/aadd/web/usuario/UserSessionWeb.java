@@ -17,6 +17,7 @@ public class UserSessionWeb implements Serializable {
         return usuario != null;
     }
     public boolean isAdmin() {
+    	System.out.println(usuario.getTipo());
         return usuario.getTipo().equals(TipoUsuario.ADMIN);
     }
     public boolean isRestaurante() {

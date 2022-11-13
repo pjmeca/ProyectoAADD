@@ -9,6 +9,7 @@ import org.eclipse.persistence.config.QueryHints;
 import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.jpa.EntityManagerHelper;
 import aadd.persistencia.jpa.bean.Restaurante;
+import aadd.persistencia.jpa.bean.Usuario;
 
 public class RestauranteDAO extends ExtensionDAO<Restaurante> {
 
@@ -68,7 +69,7 @@ public class RestauranteDAO extends ExtensionDAO<Restaurante> {
         }
     }
     
-    public List<RestauranteDTO> findRestaurantesByUsuarioResponsable(Integer responsable) {
+    public List<RestauranteDTO> findRestaurantesByUsuarioResponsable(Usuario responsable) {
 	    try {
 	        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Restaurante.findRestaurantesByUsuarioResponsable");
 	        query.setParameter("responsable", responsable);
@@ -77,4 +78,8 @@ public class RestauranteDAO extends ExtensionDAO<Restaurante> {
 	        throw re;
 	    }
 	}
+    
+    public List<RestauranteDTO> findRestaurantesByUsuarioResponsableId(Integer responsable) {
+    	return findRestaurantesByUsuarioResponsable(UsuarioDAO.getUsuarioDAO().findById(responsable));
+    }
 }

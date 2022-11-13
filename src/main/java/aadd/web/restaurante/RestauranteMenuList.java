@@ -11,6 +11,8 @@ import javax.inject.Named;
 
 import aadd.persistencia.dto.PlatoDTO;
 import aadd.persistencia.dto.RestauranteDTO;
+import aadd.persistencia.jpa.bean.TipoUsuario;
+import aadd.web.usuario.UserSessionWeb;
 import aadd.zeppelinum.ServicioGestionPlataforma;
 
 @Named
@@ -25,6 +27,9 @@ public class RestauranteMenuList implements Serializable {
     private Double precio;
     private ServicioGestionPlataforma servicio;
     private RestauranteDTO restauranteSeleccionado;
+    
+    @Inject
+    private UserSessionWeb sesionWeb;
 
     public RestauranteMenuList() {
         servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();
@@ -43,6 +48,13 @@ public class RestauranteMenuList implements Serializable {
         return menu;
     }
     public void crearPlato() {
+    	// Comprobamos que el usuario sea de tipo restaurante
+    	if(!(sesionWeb.isLogin() && sesionWeb.isRestaurante())) {
+    		facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se ha podido crear el plato", "Permiso denegado, usuario inválido."));
+            loadMenu();
+    		return;
+    	}
+    	
         boolean exito = servicio.nuevoPlato(titulo, descripcion, precio, idRestaurante);
         if (exito) {
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Plato creado", ""));

@@ -2,21 +2,25 @@ package aadd.web.restaurante;
 
 import java.io.IOException;
 import java.io.Serializable;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.event.map.PointSelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
-
+import aadd.persistencia.dto.RestauranteDTO;
+import aadd.persistencia.jpa.bean.CategoriaRestaurante;
+import aadd.persistencia.jpa.dao.RestauranteDAO;
+import aadd.persistencia.mongo.bean.Direccion;
+import aadd.persistencia.mongo.dao.DireccionDAO;
 import aadd.web.usuario.UserSessionWeb;
 import aadd.zeppelinum.ServicioGestionPlataforma;
 
@@ -37,14 +41,35 @@ public class RestauranteWeb implements Serializable{
     private UserSessionWeb usuarioSesion;
     private Integer responsableId;
     private ServicioGestionPlataforma servicio;
+    private List<CategoriaRestaurante> categoriasSelected;
 
     public RestauranteWeb() {
         simpleModel = new DefaultMapModel<Integer>();
         servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();
     }
+    
     @PostConstruct
-    public void obtenerUsuarioSesion() {
+    public void init() {
+    	obtenerUsuarioSesion();
+    	setRestaurantesMarker();
+    }
+    
+    private void obtenerUsuarioSesion() {
         responsableId = usuarioSesion.getUsuario().getId();
+    }
+    
+    private void setRestaurantesMarker() {
+    	// Añadimos los restaurantes del usuario al mapa
+        List<RestauranteDTO> restaurantes = RestauranteDAO.getRestauranteDAO().findRestaurantesByUsuarioResponsableId(responsableId);
+        for(RestauranteDTO r : restaurantes) {
+        	// Recuperamos las coordenadas del restaurante
+        	Direccion d = DireccionDAO.getDireccionDAO().findByRestaurante(r.getId());
+        	double longitud = d.getCoordenadas().getPosition().getValues().get(0);
+        	double latitud = d.getCoordenadas().getPosition().getValues().get(1);
+        	LatLng coord = new LatLng(latitud, longitud);
+        	
+        	simpleModel.addOverlay(new Marker<Integer>(coord, r.getNombre(), r.getId()));
+        }
     }
 
     public void onPointSelect(PointSelectEvent event) {
@@ -65,7 +90,11 @@ public class RestauranteWeb implements Serializable{
     }
 
     public void crearRestaurante() {
-        Integer restauranteId = servicio.registrarRestaurante(nombreRestaurante, responsableId, calle, codigoPostal,numero, ciudad, latitudSelected, longitudSelected, null);
+    	ArrayList<Integer> categoriasSelectedInt = new ArrayList<>();
+		for(CategoriaRestaurante c : categoriasSelected)
+			categoriasSelectedInt.add(c.getId());
+		
+        Integer restauranteId = servicio.registrarRestaurante(nombreRestaurante, responsableId, calle, codigoPostal,numero, ciudad, latitudSelected, longitudSelected, categoriasSelectedInt);
 
         if (restauranteId == null) {
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El restaurante no se ha podido crear", ""));
@@ -116,6 +145,15 @@ public class RestauranteWeb implements Serializable{
 	}
 	public void setSimpleModel(MapModel<Integer> simpleModel) {
 		this.simpleModel = simpleModel;
+	}
+	public List<CategoriaRestaurante> getCategorias() {
+		return servicio.getAllCategorias();
+	}
+	public List<CategoriaRestaurante> getCategoriasSelected() {
+		return categoriasSelected;
+	}
+	public void setCategoriasSelected(List<CategoriaRestaurante> categoriasSelected) {
+		this.categoriasSelected = categoriasSelected;
 	}
 	
 }
