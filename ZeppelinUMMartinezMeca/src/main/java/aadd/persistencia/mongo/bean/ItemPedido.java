@@ -6,6 +6,7 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 
 import aadd.persistencia.jpa.bean.Plato;
+import aadd.persistencia.jpa.dao.PlatoDAO;
 
 public class ItemPedido implements Serializable{
 	@BsonId
@@ -47,6 +48,12 @@ public class ItemPedido implements Serializable{
 	}
 	public void setPrecioTotal(Double predioTotal) {
 		this.precioTotal = predioTotal;
+	}
+	public String getTitulo() {
+		return PlatoDAO.getPlatoDAO().findById(plato).getTitulo();
+	}
+	public Double getPrecio() {
+		return PlatoDAO.getPlatoDAO().findById(plato).getPrecio();
 	}
 	
 }

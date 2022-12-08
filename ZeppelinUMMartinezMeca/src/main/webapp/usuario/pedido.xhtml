@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/template_privada.xhtml">
+	<ui:param name="menuseleccionado" value="estilo2" />
+	<ui:define name="title">Nuevo pedido</ui:define>
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{pedidoWeb.idRestaurante}" />
+			<f:viewAction action="#{pedidoWeb.loadMenu()}" />
+		</f:metadata>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="menu">
+			<h3>#{pedidoWeb.restaurante.nombre}</h3>
+			<br />
+			<p:button value="Volver" href="buscadorRestaurantes.xhtml"
+				style="margin-right:5px" icon="fa fa-arrow-left"></p:button>
+			<p:button value="Continuar" href="pedidoFormalizar.xhtml"
+				style="margin-right:5px; float: right" icon="fa fa-arrow-right"></p:button>			
+			<br />
+			<p:messages showDetail="true" id="info" />
+			<p:dataTable var="plato" value="#{pedidoWeb.items}"
+				rows="50" id="tabla_header" paginator="true"
+				rowsPerPageTemplate="5,10,{ShowAll|'All'}"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+				<p:column headerText="Título">
+					<h:outputText value="#{plato.getTitulo()}" />
+				</p:column>
+				<p:column headerText="Precio">
+					<h:outputText value="#{plato.precio}" />
+				</p:column>
+				<p:column style="width: 200px;" headerText="Cantidad">
+					<p:spinner id="cantidad" value="#{plato.cantidad}"
+						buttons="horizontal-after" upButtonStyleClass="ui-button-success"
+						downButtonStyleClass="ui-button-danger" min="0">
+						<p:ajax update="@form"
+							process="@this" />
+					</p:spinner>
+				</p:column>
+			</p:dataTable>
+			<p:button value="Continuar" href="pedidoFormalizar.xhtml"
+				style="margin-right:5px; float: right" icon="fa fa-arrow-right"></p:button>	
+			<p:growl showDetail="true" id="info2" />
+		</h:form>
+	</ui:define>
+</ui:composition>

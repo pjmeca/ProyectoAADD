@@ -36,7 +36,7 @@ public class ServicioGestionSpring {
             for (Direccion d : direcciones) {
                 Restaurante r = restauranteDAO.findById(d.getRestaurante());
                 Position coordenadas = d.getCoordenadas().getCoordinates();
-                RestauranteDTO restauranteDTO = new RestauranteDTO(r.getId(), r.getNombre(), r.getValoracionGlobal(), coordenadas.getValues().get(0), coordenadas.getValues().get(1), d.getCalle(),d.getCodigoPostal(), d.getCiudad(), d.getNumero());
+                RestauranteDTO restauranteDTO = new RestauranteDTO(r.getId(), r.getNombre(), r.getValoracionGlobal(), coordenadas.getValues().get(0), coordenadas.getValues().get(1), d.getCalle(),d.getCodigoPostal(), d.getCiudad(), d.getNumero(), r.getNumPlatos());
                 restaurantes.add(restauranteDTO);
             }
             return restaurantes;

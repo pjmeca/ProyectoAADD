@@ -12,27 +12,50 @@ xmlns:h="http://java.sun.com/jsf/html">
 	<ul>
 		<li class="#{estilo1}"><a
 			href="#{request.contextPath}/index.xhtml">Inicio</a></li>
-		<li class="#{estilo2}"><a href="#">Gestión de restaurantes</a>
-			<ul>
-				<li><a href="#{request.contextPath}/restaurante/form.xhtml">Crear
-						restaurante</a></li>
-			</ul></li>
+		
+		<h:panelGroup rendered="#{userSessionWeb.isLogin() and userSessionWeb.isRestaurante()}">
+			<li class="#{estilo2}"><a href="#">Gestión de restaurantes</a>
+				<ul>
+					<li><a href="#{request.contextPath}/restaurante/form.xhtml">Crear
+							restaurante</a></li>
+				</ul></li>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{userSessionWeb.isLogin() == false || userSessionWeb.isLogin() and userSessionWeb.isCliente()}">
+			<li class="#{estilo2}"><a
+			href="#{request.contextPath}/usuario/buscadorRestaurantes.xhtml">Haz tu pedido</a></li>
+		</h:panelGroup>
+		
 		<li class="#{estilo4}"> 
     		<a href="#{request.contextPath}/noticias/infousuarios.xhtml">Comunicar novedades</a> 
 		</li>
-		<li class="#{estilo3}"><a
+		
+			<h:panelGroup rendered="#{userSessionWeb.isLogin() == false}">
+			<li class="#{estilo3}"><a
 			href="#{request.contextPath}/usuario/registro.xhtml">Registro</a></li>
-			
-		<li>
+			</h:panelGroup>
+		
             <h:panelGroup rendered="#{userSessionWeb.isLogin() and userSessionWeb.isAdmin()}">
             <li class="#{estiloRider}"><a
-            href="#{request.contextPath}/usuario/registro_rider.xhtml">Nuevo Rider</a></li>
+            href="#{request.contextPath}/admin/registro_rider.xhtml">Nuevo Rider</a></li>
             </h:panelGroup>
-        </li>
 
-		<li class="#{estiloPerfil}"><a
+		<h:panelGroup rendered="#{userSessionWeb.isLogin() and userSessionWeb.isAdmin()}">
+			<li class="#{estiloValidar}"><a
+			href="#{request.contextPath}/admin/validarUsuarioRestaurante.xhtml">Validar usuarios restaurante</a></li>
+		</h:panelGroup>
+		
+		<h:panelGroup rendered="#{userSessionWeb.isLogin()}">
+				<li class="#{estiloPerfil}"><a
 			href="#{request.contextPath}/usuario/perfilusuario.xhtml">Perfil de usuario</a></li>
-		<li><a href="#{request.contextPath}/logout">Cerrar sesión</a></li>
+		</h:panelGroup>
+	
+		
+		<h:panelGroup rendered="#{userSessionWeb.isLogin() == false}">
+			<li><a href="#{request.contextPath}/usuario/perfilusuario.xhtml">Iniciar sesión</a></li>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{userSessionWeb.isLogin()}">
+			<li><a href="#{request.contextPath}/logout">Cerrar sesión</a></li>
+		</h:panelGroup>
 	</ul>
 	</nav> <!-- Banner --> </section>
 	<!-- Nav -->

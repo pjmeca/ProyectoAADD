@@ -1,13 +1,6 @@
 package aadd.persistencia.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import org.bson.types.ObjectId;
-
-import aadd.persistencia.mongo.bean.EstadoPedido;
-import aadd.persistencia.mongo.bean.ItemPedido;
 
 public class PedidoDTO implements Serializable{
 

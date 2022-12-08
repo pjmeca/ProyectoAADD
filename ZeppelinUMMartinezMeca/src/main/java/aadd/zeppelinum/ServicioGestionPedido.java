@@ -26,6 +26,8 @@ public class ServicioGestionPedido {
     private static ServicioGestionPedido servicio;
 
     private static ZeppelinUMRemoto zeppelinumRemoto;
+    
+    private static int nextCodigoPedido = PedidoDAO.getPedidoDAO().getTotalDocumentos();
 
 
     public static ServicioGestionPedido getServicioGestionPedido() {
@@ -40,12 +42,16 @@ public class ServicioGestionPedido {
         return servicio;
     }  
     
-    public boolean registrarPedido(String cod,Integer usu, Integer res, LocalDateTime fH, LocalDateTime fE, String coment, String datosDir
+    public ObjectId registrarPedido(Integer usu, Integer res, LocalDateTime fH, LocalDateTime fE, String coment, String datosDir
     		, Double importe, Integer rep, LocalDateTime fEstado, List<ItemPedido> items) {
     	PedidoDAO ped = PedidoDAO.getPedidoDAO();
-    	Pedido p = new Pedido(cod,usu,res,fH,fE,coment,datosDir,importe,rep,fEstado,items);
-    	return ped.save(p)!=null;
+    	Pedido p = new Pedido(getNextCodigoPedido(),usu,res,fH,fE,coment,datosDir,importe,rep,fEstado,items);
+    	return ped.save(p); 
     	
+    }
+    
+    public static String getNextCodigoPedido() {
+    	return String.valueOf(nextCodigoPedido++);
     }
     
     public boolean editarEstado(String cod, TipoEstado estado, LocalDateTime fecha) {
@@ -146,9 +152,15 @@ public class ServicioGestionPedido {
         return opinionesDTO;
     }
     
-    public void crearPedido() {
+    public boolean crearPedido(Integer usu, Integer res, LocalDateTime fH, LocalDateTime fE, String coment, String datosDir
+    		, Double importe, List<ItemPedido> items) {
         //se crea un pedido, este método deberá tener los atributos necesarios
+    	
+    	ObjectId id = registrarPedido(usu, res, fH, fE, coment, datosDir, importe, 0, fH, items);
+    	
         //una vez creado, nos quedamos con el id que le ha generado mongodb y con eso activamos el timer
-        zeppelinumRemoto.pedidoIniciado("id del pedido creado en mongodb");
+        //zeppelinumRemoto.pedidoIniciado(id.toString());
+        
+        return id != null;
     }
 }

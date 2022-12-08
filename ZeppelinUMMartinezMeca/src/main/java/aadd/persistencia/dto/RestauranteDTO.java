@@ -14,16 +14,18 @@ public class RestauranteDTO implements Serializable{
     private String codigoPostal; 
     private String ciudad;
     private Integer numero;
+    private Integer numPlatos;
     
-    public RestauranteDTO(Integer id, String nombre, Double valoracionGlobal) {
+    public RestauranteDTO(Integer id, String nombre, Double valoracionGlobal, Integer numPlatos) {
         super();
         this.id = id;
         this.nombre = nombre;
         this.valoracionGlobal = valoracionGlobal;
+        this.numPlatos = numPlatos;
     }
         
     public RestauranteDTO(Integer id, String nombre, Double valoracionGlobal, Double longitud, Double latitud,
-            String calle, String codigoPostal, String ciudad, Integer numero) {
+            String calle, String codigoPostal, String ciudad, Integer numero, Integer numPlatos) {
         super();
         this.id = id;
         this.nombre = nombre;
@@ -34,6 +36,7 @@ public class RestauranteDTO implements Serializable{
         this.codigoPostal = codigoPostal;
         this.ciudad = ciudad;
         this.numero = numero;
+        this.numPlatos = numPlatos;
     }
 
 	public Integer getId() {
@@ -106,5 +109,13 @@ public class RestauranteDTO implements Serializable{
 
 	public void setNumero(Integer numero) {
 		this.numero = numero;
+	}
+
+	public Integer getNumPlatos() {
+		return numPlatos;
+	}
+
+	public void setNumPlatos(Integer numPlatos) {
+		this.numPlatos = numPlatos;
 	}
 }

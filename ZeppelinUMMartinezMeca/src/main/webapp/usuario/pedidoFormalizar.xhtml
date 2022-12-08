@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/template_privada.xhtml">
+	<ui:param name="menuseleccionado" value="estilo2" />
+	<ui:define name="title">Nuevo pedido</ui:define>
+	<ui:define name="content">
+		<h:form id="menu">
+			<h3>#{pedidoWeb.restaurante.nombre}</h3>
+			<br />
+			<p:button value="Volver" href="buscadorRestaurantes.xhtml"
+				style="margin-right:5px" icon="fa fa-arrow-left"></p:button>	
+			<br />
+			<h5>Dirección</h5>
+    		<p:inputText value="#{pedidoWeb.direccion}" required="true"/>
+    		<h5>Hora estimada</h5>
+    		<p:datePicker value="#{pedidoWeb.hora}" timeOnly="true"
+                        pattern="HH:mm" required="true"/>
+            <h5>Comentarios adicionales</h5>
+    			<p:inputTextarea value="#{pedidoWeb.comentario}" rows="4" cols="30" />
+			<p:messages showDetail="true" id="info" />
+			<p:dataTable var="plato" value="#{pedidoWeb.getItemsPedido()}"
+				id="tabla_header">
+				<p:column headerText="Título">
+					<h:outputText value="#{plato.getTitulo()}" />
+				</p:column>
+				<p:column headerText="Precio">
+					<h:outputText value="#{plato.precio}" />
+				</p:column>
+				<p:column style="width: 200px;" headerText="Cantidad">
+					<h:outputText value="#{plato.cantidad}" />
+				</p:column>
+			</p:dataTable>
+			<h5>Subtotal: </h5> <h:outputText value="#{pedidoWeb.getImporte()}" />
+			<h:commandButton value="Finalizar" actionListener="#{pedidoWeb.finalizar}"
+				style="margin-right:5px; float: right" icon="fa fa-arrow-right"></h:commandButton>	
+			<p:growl showDetail="true" id="info2" />
+		</h:form>
+	</ui:define>
+</ui:composition>

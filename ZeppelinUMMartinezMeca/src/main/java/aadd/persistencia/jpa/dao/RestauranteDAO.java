@@ -28,7 +28,7 @@ public class RestauranteDAO extends ExtensionDAO<Restaurante> {
     public List<RestauranteDTO> transformarToDTO(List<Restaurante> restaurantes) {
         List<RestauranteDTO> rs = new ArrayList<RestauranteDTO>();
         for (Restaurante r : restaurantes) {
-            rs.add(new RestauranteDTO(r.getId(), r.getNombre(), r.getValoracionGlobal()));
+            rs.add(new RestauranteDTO(r.getId(), r.getNombre(), r.getValoracionGlobal(), r.getNumPlatos()));
         }
         return rs;
     }
@@ -68,6 +68,19 @@ public class RestauranteDAO extends ExtensionDAO<Restaurante> {
             throw re;
         }
     }
+    
+    public List<RestauranteDTO> findAllRestaurantes() {
+	    try {
+	        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Restaurante.findAllRestaurantes");
+	        return transformarToDTO(query.getResultList());
+	    } catch (RuntimeException re) {
+	        throw re;
+	    }
+	}
+    
+    public List<RestauranteDTO> findRestaurantesDisponibles() {
+	    return transformarToDTO(PlatoDAO.getPlatoDAO().getRestaurantesByPlatosDisponibles());
+	}
     
     public List<RestauranteDTO> findRestaurantesByUsuarioResponsable(Usuario responsable) {
 	    try {

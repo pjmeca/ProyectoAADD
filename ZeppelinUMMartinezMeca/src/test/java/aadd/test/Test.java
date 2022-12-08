@@ -130,8 +130,8 @@ class Test {
 		ServicioGestionPedido servicio = ServicioGestionPedido.getServicioGestionPedido();
 		List<ItemPedido> l = new ArrayList<ItemPedido>();
 		l.add(new ItemPedido(3, 1, 6.0));
-		assertTrue(servicio.registrarPedido("pedidoA", 1, 10, LocalDateTime.now(), LocalDateTime.now(),
-				"esto es un comentario", "atico", 50.0, 21, LocalDateTime.now(), l));
+		assertTrue(servicio.registrarPedido(1, 10, LocalDateTime.now(), LocalDateTime.now(),
+				"esto es un comentario", "atico", 50.0, 21, LocalDateTime.now(), l) != null);
 		assertTrue(servicio.editarEstado("pedidoA", TipoEstado.ACEPTADO, LocalDateTime.now()));
 		assertTrue(servicio.asignarRepartidor("pedidoA", 42));
 		List<PedidoDTO> list = servicio.findByUsuarioRestaurante(1, 10);
@@ -140,10 +140,10 @@ class Test {
 				&& p.getDatosDireccion().equals("atico") && p.getImporte() == 50.0);
 	}
 
-	@org.junit.jupiter.api.Test
+	/*@org.junit.jupiter.api.Test
 	void hacerpedido() {
 		ServicioGestionPedido servicio = ServicioGestionPedido.getServicioGestionPedido();
 		servicio.crearPedido();
-	}
+	}*/
 
 }

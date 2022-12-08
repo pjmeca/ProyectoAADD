@@ -13,7 +13,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "restaurante")
 @NamedQueries({
-    @NamedQuery(name = "Restaurante.findRestaurantesByUsuarioResponsable", query = " SELECT r FROM Restaurante r WHERE r.responsable = :responsable ")
+    @NamedQuery(name = "Restaurante.findRestaurantesByUsuarioResponsable", query = " SELECT r FROM Restaurante r WHERE r.responsable = :responsable "),
+    @NamedQuery(name = "Restaurante.findAllRestaurantes", query = " SELECT r FROM Restaurante r")
 })
 public class Restaurante implements Serializable {
 	
@@ -109,6 +110,10 @@ public class Restaurante implements Serializable {
 
 	public void setPlatos(List<Plato> platos) {
 		this.platos = platos;
+	}
+	
+	public int getNumPlatos() {
+		return platos.size();
 	}
 	
 	public List<CategoriaRestaurante> getCategorias() {

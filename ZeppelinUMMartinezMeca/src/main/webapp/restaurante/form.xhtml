@@ -19,7 +19,8 @@ Crear restaurante
 				<p:ajax event="pointSelect"
 					listener="#{restauranteWeb.onPointSelect}"
 					update="nuevoRestaurante"
-					oncomplete="PF('crearRestaurante').show();" />
+					oncomplete="PF('crearRestaurante').show();"
+					disabled = "#{(userSessionWeb.isLogin() and userSessionWeb.isRestaurante()) == false}" />
 				<p:ajax event="overlaySelect"
 					listener="#{restauranteWeb.onMarkerRestauranteSelect}" />
 			</p:gmap>

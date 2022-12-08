@@ -311,7 +311,7 @@ public class ServicioGestionPlataforma {
 
 			RestauranteDTO restauranteDTO = new RestauranteDTO(r.getId(), r.getNombre(), r.getValoracionGlobal(),
 					coordenadas.getValues().get(0), coordenadas.getValues().get(1), d.getCalle(), d.getCodigoPostal(),
-					d.getCiudad(), d.getNumero());
+					d.getCiudad(), d.getNumero(), r.getNumPlatos());
 			restaurantes.add(restauranteDTO);
 		}
 		return restaurantes;
@@ -331,7 +331,15 @@ public class ServicioGestionPlataforma {
 
 	public RestauranteDTO getRestaurante(Integer idRestaurante) {
 		Restaurante restaurante = RestauranteDAO.getRestauranteDAO().findById(idRestaurante);
-		return new RestauranteDTO(idRestaurante, restaurante.getNombre(), restaurante.getValoracionGlobal());
+		return new RestauranteDTO(idRestaurante, restaurante.getNombre(), restaurante.getValoracionGlobal(), restaurante.getNumPlatos());
+	}
+	
+	public List<RestauranteDTO> getAllRestaurantes() {
+		return RestauranteDAO.getRestauranteDAO().findAllRestaurantes();
+	}
+	
+	public List<RestauranteDTO> getRestaurantesDisponibles() {
+		return RestauranteDAO.getRestauranteDAO().findRestaurantesDisponibles();
 	}
 	
 	public List<Integer> getIdUsuariosByTipo(List<TipoUsuario> tipos){

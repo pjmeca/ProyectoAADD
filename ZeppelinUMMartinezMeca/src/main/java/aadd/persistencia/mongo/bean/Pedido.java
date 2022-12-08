@@ -12,9 +12,10 @@ import com.mongodb.client.model.geojson.Point;
 
 import aadd.persistencia.jpa.bean.Restaurante;
 import aadd.persistencia.jpa.bean.Usuario;
+import aadd.persistencia.mongo.dao.PedidoDAO;
 
 public class Pedido implements Serializable{
-
+	
 	@BsonId
 	private ObjectId id;
     private String codigo;
@@ -104,7 +105,6 @@ public class Pedido implements Serializable{
 	public void setRepartidor(Integer repartidor) {
 		this.repartidor = repartidor;
 	}
-	
 	public List<EstadoPedido> getEstados() {
 		return new ArrayList<>(estados);
 	}
@@ -117,6 +117,5 @@ public class Pedido implements Serializable{
 	public void setItems(List<ItemPedido> items) {
 		this.items = items;
 	}
-    
     
 }

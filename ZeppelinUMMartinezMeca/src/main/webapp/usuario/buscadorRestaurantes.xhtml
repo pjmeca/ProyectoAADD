@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template/template_privada.xhtml">
+    <ui:param name="menuseleccionado" value="estilo2" />
+    <ui:define name="title">Buscar restaurante</ui:define>
+    <ui:define name="content">
+    
+    <h:form>
+		<p:dataTable var="restaurante"
+			value="#{buscadorRestaurantes.restaurantes}"
+			rowKey="#{restaurante.id}"
+			selection="#{buscadorRestaurantes.restauranteSeleccionado}"
+			selectionMode="single"
+			widgetVar="restaurantesTabla"
+			globalFilterFunction="#{buscadorRestaurantes.globalFilterFunction}"
+			rows="5" paginator="true" paginatorPosition="bottom" 
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	      	currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} actividades"
+            rowsPerPageTemplate="5,10,15,20,{ShowAll|'Todas'}"
+            sortMode="single">
+			
+			<p:ajax event="rowSelect" listener="#{buscadorRestaurantes.onRowSelect}"/>
+			
+			<f:facet name="header">
+                <div class="flex justify-content-end">
+	                  <p:inputText id="globalFilter" onkeyup="PF('restaurantesTabla').filter()" style="width:300px"
+	                               placeholder="Buscar restaurantes..."/>
+	              </div>
+            </f:facet>
+
+			<p:column headerText="Nombre">
+				<h:outputText value="#{restaurante.nombre}" />
+			</p:column>
+			<p:column headerText="Platos">
+				<h:outputText value="#{restaurante.numPlatos}" />
+			</p:column>
+			<p:column headerText="Valoración global" sortBy="#{restaurante.valoracionGlobal}">
+				<h:outputText value="#{restaurante.valoracionGlobal}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+
+	</ui:define>
+</ui:composition>
