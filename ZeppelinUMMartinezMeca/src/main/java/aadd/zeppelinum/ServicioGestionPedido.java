@@ -7,6 +7,8 @@ import aadd.persistencia.dto.PedidoDTO;
 
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
+
+import aadd.persistencia.mongo.bean.EstadoPedido;
 import aadd.persistencia.mongo.bean.ItemPedido;
 import org.bson.types.ObjectId;
 import aadd.persistencia.mongo.bean.Pedido;
@@ -54,7 +56,7 @@ public class ServicioGestionPedido {
     	return String.valueOf(nextCodigoPedido++);
     }
     
-    public boolean editarEstado(String cod, TipoEstado estado, LocalDateTime fecha) {
+    public EstadoPedido editarEstado(String cod, TipoEstado estado, LocalDateTime fecha) {
     	return PedidoDAO.getPedidoDAO().editarEstadoById(cod, estado, fecha);
     }
     
@@ -63,19 +65,7 @@ public class ServicioGestionPedido {
     }
     
     public List<PedidoDTO> findByUsuarioRestaurante(Integer codUsu, Integer codRes){
-    	List<PedidoDTO> dto = new ArrayList<PedidoDTO>();
-    	List<Pedido> peds = PedidoDAO.getPedidoDAO().getByUsuarioRestaurante(codUsu,codRes);
-    	
-    	for(Pedido p:peds) {
-    		PedidoDTO pdto = new PedidoDTO();
-    		pdto.setCliente(p.getCliente());
-    		pdto.setRestaurante(p.getRestaurante());
-    		pdto.setComentarios(p.getComentarios());
-    		pdto.setDatosDireccion(p.getDatosDireccion());
-    		pdto.setImporte(p.getImporte());
-    		dto.add(pdto);
-    	}
-    	return dto;
+    	return PedidoDAO.getPedidoDAO().getByUsuarioRestaurante(codUsu,codRes);
     }
     
     public boolean opinar(Integer usuario, Integer restaurante, String comentario, Double valoracion) {

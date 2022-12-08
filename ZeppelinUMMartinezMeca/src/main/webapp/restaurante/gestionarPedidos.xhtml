@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/template_privada.xhtml">
+	<ui:param name="menuseleccionado" value="estilo2" />
+	<ui:define name="title">Gestionar pedidos</ui:define>
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewAction action="#{gestionarPedidos.init()}" />
+		</f:metadata>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="menu">
+			<p:dataTable id="checkboxDT" var="pedido"
+				value="#{gestionarPedidos.pedidos}" rowKey="#{usuario.id}"
+				style="margin-bottom:0" paginator="true" rows="5"
+				selectionPageOnly="false">
+
+				<p:column headerText="Código">
+					<h:outputText value="#{pedido.codigo}" />
+				</p:column>
+
+				<p:column headerText="Estado actual">
+					<h:outputText value="#{pedido.getUltimoEstado()}" />
+				</p:column>
+
+				<p:column headerText="Cambiar a estado">
+					<h:panelGroup rendered="#{pedido.isUltimoEstado('INICIO')}">
+						<p:commandButton value="Aceptar" icon="pi pi-home"
+							action="#{gestionarPedidos.setEstado(pedido, 'ACEPTADO')}">
+						</p:commandButton>
+						<p:commandButton value="Cancelar" icon="pi pi-home"
+							action="#{gestionarPedidos.setEstado(pedido, 'CANCELADO')}">
+						</p:commandButton>
+					</h:panelGroup>
+					
+					<h:panelGroup rendered="#{pedido.isUltimoEstado('ACEPTADO')}">
+						<p:commandButton value="Preparado" icon="pi pi-home"
+							action="#{gestionarPedidos.setEstado(pedido, 'PREPARADO')}">
+						</p:commandButton>
+					</h:panelGroup>
+					
+					<h:panelGroup rendered="#{pedido.isUltimoEstado('PREPARADO')}">
+						<p:commandButton value="Recogido" icon="pi pi-home"
+							action="#{gestionarPedidos.setEstado(pedido, 'RECOGIDO')}">
+						</p:commandButton>
+					</h:panelGroup>
+				</p:column>
+
+			</p:dataTable>
+			<h:commandButton value="Validar"
+				actionListener="#{validarRestaurante.validar}"
+				style="margin-right:5px; float: right" icon="fa fa-arrow-right"></h:commandButton>
+		</h:form>
+	</ui:define>
+</ui:composition>
