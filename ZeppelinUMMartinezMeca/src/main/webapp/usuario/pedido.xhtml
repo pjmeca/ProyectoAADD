@@ -41,9 +41,8 @@
 					</p:spinner>
 				</p:column>
 			</p:dataTable>
-			<p:button value="Continuar" href="pedidoFormalizar.xhtml"
-				style="margin-right:5px; float: right" icon="fa fa-arrow-right"></p:button>	
-			<p:growl showDetail="true" id="info2" />
+			<h:commandButton value="Continuar" actionListener="#{pedidoWeb.formalizar}"
+				style="margin-right:5px; float: right" icon="fa fa-arrow-right"></h:commandButton>	
 		</h:form>
 	</ui:define>
 </ui:composition>

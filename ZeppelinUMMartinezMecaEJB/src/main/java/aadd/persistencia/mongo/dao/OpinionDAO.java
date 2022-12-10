@@ -25,40 +25,41 @@ import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 
-@Singleton(name="OpinionDAO")
+@Singleton(name = "OpinionDAO")
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 public class OpinionDAO {
-    private MongoClient mongoClient;
-    private MongoDatabase db;
-    protected MongoCollection<Document> coleccion;
-    
-    @PostConstruct
-    public void init() {
-        mongoClient = MongoClients.create("mongodb://localhost:27017");
-        db = mongoClient.getDatabase("zeppelinummartinezmeca");      
-        coleccion = db.getCollection("opinion");        
-    }
-    
-    @PreDestroy
-    public void destroy() {
-        mongoClient.close();
-    }
-    @Lock(LockType.READ)
-    public List<Document> calcularEstadisticas(Integer idUsuario) {
-        Bson match = Aggregates.match(Filters.eq("usuario",idUsuario));
-        Bson group = Aggregates.group("$valor", Accumulators.sum("total", 1));
+	private MongoClient mongoClient;
+	private MongoDatabase db;
+	protected MongoCollection<Document> coleccion;
 
-        try {
-            AggregateIterable<Document> resultado = coleccion.aggregate(Arrays.asList(match, group));
-            List<Document> estadisticas = new ArrayList<>();
-            MongoCursor<Document> it = resultado.iterator();
-            while (it.hasNext()) {
-                estadisticas.add(it.next());
-            }
-            return estadisticas;
-        } catch (RuntimeException re) {
-            re.printStackTrace();
-        }
-        return null;
-    }
+	@PostConstruct
+	public void init() {
+		mongoClient = MongoClients.create("mongodb://localhost:27017");
+		db = mongoClient.getDatabase("zeppelinummartinezmeca");
+		coleccion = db.getCollection("opinion");
+	}
+
+	@PreDestroy
+	public void destroy() {
+		mongoClient.close();
+	}
+
+	@Lock(LockType.READ)
+	public List<Document> calcularEstadisticas(Integer idUsuario) {
+		Bson match = Aggregates.match(Filters.eq("usuario", idUsuario));
+		Bson group = Aggregates.group("$valor", Accumulators.sum("total", 1));
+
+		try {
+			AggregateIterable<Document> resultado = coleccion.aggregate(Arrays.asList(match, group));
+			List<Document> estadisticas = new ArrayList<>();
+			MongoCursor<Document> it = resultado.iterator();
+			while (it.hasNext()) {
+				estadisticas.add(it.next());
+			}
+			return estadisticas;
+		} catch (RuntimeException re) {
+			re.printStackTrace();
+		}
+		return null;
+	}
 }

@@ -44,11 +44,14 @@ public class ServicioGestionPedido {
         return servicio;
     }  
     
-    public ObjectId registrarPedido(Integer usu, Integer res, LocalDateTime fH, LocalDateTime fE, String coment, String datosDir
+    public String registrarPedido(Integer usu, Integer res, LocalDateTime fH, LocalDateTime fE, String coment, String datosDir
     		, Double importe, Integer rep, LocalDateTime fEstado, List<ItemPedido> items) {
     	PedidoDAO ped = PedidoDAO.getPedidoDAO();
     	Pedido p = new Pedido(getNextCodigoPedido(),usu,res,fH,fE,coment,datosDir,importe,rep,fEstado,items);
-    	return ped.save(p); 
+    	if (ped.save(p) != null)
+    		return p.getCodigo();
+    	else
+    		return null;
     	
     }
     
@@ -146,10 +149,11 @@ public class ServicioGestionPedido {
     		, Double importe, List<ItemPedido> items) {
         //se crea un pedido, este método deberá tener los atributos necesarios
     	
-    	ObjectId id = registrarPedido(usu, res, fH, fE, coment, datosDir, importe, 0, fH, items);
+    	String id = registrarPedido(usu, res, fH, fE, coment, datosDir, importe, 0, fH, items);
     	
         //una vez creado, nos quedamos con el id que le ha generado mongodb y con eso activamos el timer
-        //zeppelinumRemoto.pedidoIniciado(id.toString());
+        if (id != null)
+        	zeppelinumRemoto.pedidoIniciado(id);
         
         return id != null;
     }

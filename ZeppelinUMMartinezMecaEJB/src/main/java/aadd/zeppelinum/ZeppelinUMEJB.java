@@ -27,7 +27,7 @@ public class ZeppelinUMEJB implements ZeppelinUMRemoto{
 
     @Override
     public void pedidoIniciado(String pedido) {
-        estadoAutomatico.startUpTimer(pedido, 30); //el timer saltará a los 30 minutos, 
+    	estadoAutomatico.startUpTimer(pedido, 30); //el timer saltará a los 30 minutos, 
                                                   //para hacer pruebas, puedes cambiar
                                                   //esto a un número de minutos más bajo     
     }

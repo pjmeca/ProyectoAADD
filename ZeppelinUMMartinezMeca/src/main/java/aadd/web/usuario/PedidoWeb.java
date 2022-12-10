@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -50,7 +51,30 @@ public class PedidoWeb implements Serializable {
         }
     }
     
-    public String finalizar() {
+    public String formalizar() {
+    	// Comprobar que al menos haya pedido un plato
+    	boolean alMenosUno = false;
+    	for(ItemPedido item : items) {
+    		if(item.getCantidad() > 0)
+    			alMenosUno = true;
+    	}
+    	if(!alMenosUno) {
+    		facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error items", "Por favor, introduce al menos un item en tu pedido."));
+    		return "";
+    	}
+    	
+    	// Redirigimos al usuario
+    	try {
+            String contextoURL = facesContext.getExternalContext().getApplicationContextPath();
+            facesContext.getExternalContext().redirect(contextoURL + "/usuario/pedidoFormalizar.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    	
+    	return "pedidoFormalizar.xhtml";
+    }
+    
+    public String finalizar() {    	   	
     	ServicioGestionPedido.getServicioGestionPedido().crearPedido(sesionWeb.getUsuario().getId(), restaurante.getId(), LocalDateTime.now(), hora.atDate(LocalDate.now()), comentario, direccion, getImporte(), items);
     	
     	// Redirigimos al usuario
