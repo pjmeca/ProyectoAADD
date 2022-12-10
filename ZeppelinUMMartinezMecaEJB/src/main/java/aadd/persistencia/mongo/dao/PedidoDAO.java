@@ -45,8 +45,7 @@ public class PedidoDAO{
 	protected CodecRegistry defaultCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
             CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 	
-	@PostConstruct
-	public void init() {
+	public PedidoDAO() {
 		mongoClient = MongoClients.create("mongodb://localhost:27017");
 		db = mongoClient.getDatabase("zeppelinummartinezmeca");
 		collection = db.getCollection("pedido", Pedido.class).withCodecRegistry(defaultCodecRegistry);

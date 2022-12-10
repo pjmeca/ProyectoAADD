@@ -80,7 +80,7 @@ public class RestauranteWeb implements Serializable{
 
     public void onMarkerRestauranteSelect(OverlaySelectEvent<Integer> event) {
         Marker<Integer> marker = (Marker<Integer>) event.getOverlay();
-        Integer restauranteSelectedId = (Integer) marker.getData();
+        Integer restauranteSelectedId = marker.getData();
         try {
             String contextoURL = facesContext.getExternalContext().getApplicationContextPath();
             facesContext.getExternalContext().redirect(contextoURL + "/restaurante/formPlatos.xhtml?id=" + restauranteSelectedId);

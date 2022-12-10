@@ -4,10 +4,11 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 	<ui:define name="title">
-Perfil de usuario
-</ui:define>
+		Perfil de usuario
+	</ui:define>
 	<ui:param name="menuseleccionado" value="estiloPerfil" />
 	<ui:define name="content">
-		<h1>Hola #{userSessionWeb.usuario.nombre}</h1>
+		<h2>Hola #{userSessionWeb.usuario.nombre}</h2>
+		<ui:include src="/usuario/estadisticas.xhtml" />
 	</ui:define>
 </ui:composition>

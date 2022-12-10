@@ -12,6 +12,7 @@ import com.mongodb.client.model.geojson.Point;
 import com.mongodb.client.model.geojson.Position;
 
 import aadd.persistencia.dto.EstadisticaOpinionDTO;
+import aadd.persistencia.dto.EstadisticaPedidosRestauranteDTO;
 import aadd.persistencia.dto.PlatoDTO;
 import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.dto.UsuarioDTO;
@@ -352,5 +353,17 @@ public class ServicioGestionPlataforma {
 
 	public Integer getNumVisitas(Integer idUsuario) {
 	    return zeppelinumRemoto.getNumVisitas(idUsuario);
+	}
+	
+	public Integer getNumRestaurantesCreados(Integer idUsuario) {
+		return zeppelinumRemoto.getNumRestaurantesCreados(idUsuario);
+	}
+	
+	public List<EstadisticaPedidosRestauranteDTO> getNumPedidosRestaurantes(Integer idUsuario) {
+		return zeppelinumRemoto.getNumPedidosRestaurantes(idUsuario);
+	}
+	
+	public void nuevaVisitaEstadisticas(Integer idUsuario) {
+		zeppelinumRemoto.nuevaVisita(idUsuario);
 	}
 }

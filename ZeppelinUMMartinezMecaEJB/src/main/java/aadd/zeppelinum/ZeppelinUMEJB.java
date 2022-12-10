@@ -6,13 +6,20 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.bson.Document;
 import aadd.persistencia.dto.EstadisticaOpinionDTO;
+import aadd.persistencia.dto.EstadisticaPedidosRestauranteDTO;
+import aadd.persistencia.dto.RestauranteDTO;
+import aadd.persistencia.jpa.dao.RestauranteDAO;
 import aadd.persistencia.mongo.dao.OpinionDAO;
+import aadd.persistencia.mongo.dao.PedidoDAO;
 
 @Stateless(name="ZeppelinUMRemoto")
 public class ZeppelinUMEJB implements ZeppelinUMRemoto{
 
     @EJB(beanName="OpinionDAO")
     private OpinionDAO opinionDAO;
+    
+    @EJB(beanName="RestauranteDAO")
+    private RestauranteDAO restauranteDAO;
     
     @EJB(beanName="Contador")
     private ContadorVisitasEJB contadorVisitas;
@@ -33,8 +40,12 @@ public class ZeppelinUMEJB implements ZeppelinUMRemoto{
     }
 
     @Override
-    public List<EstadisticaOpinionDTO> getEstadisticasOpinion(Integer idUsuario) {
-        contadorVisitas.nuevaVista(idUsuario);
+    public void nuevaVisita(Integer idUsuario) {
+    	contadorVisitas.nuevaVisita(idUsuario);
+    }
+    
+    @Override
+    public List<EstadisticaOpinionDTO> getEstadisticasOpinion(Integer idUsuario) {  
         List<EstadisticaOpinionDTO> estadisticas = new ArrayList<>();
         
         List<Document> resultados = opinionDAO.calcularEstadisticas(idUsuario);
@@ -43,4 +54,24 @@ public class ZeppelinUMEJB implements ZeppelinUMRemoto{
         }       
         return estadisticas;
     }
+
+	@Override
+	public Integer getNumRestaurantesCreados(Integer idUsuario) {
+		return restauranteDAO.count(idUsuario);
+	}
+
+	@Override
+	public List<EstadisticaPedidosRestauranteDTO> getNumPedidosRestaurantes(Integer idUsuario) {
+		List<EstadisticaPedidosRestauranteDTO> lista = new ArrayList<>();
+		
+		List<RestauranteDTO> restaurantes = restauranteDAO.findRestaurantesByUsuarioResponsable(idUsuario);
+		
+		for(RestauranteDTO r : restaurantes) {
+			int numPedidos = PedidoDAO.getPedidoDAO().getByRestaurante(r.getId()).size();
+			
+			EstadisticaPedidosRestauranteDTO e = new EstadisticaPedidosRestauranteDTO(r.getNombre(), numPedidos);
+			lista.add(e);
+		}
+		return lista;
+	}
 }

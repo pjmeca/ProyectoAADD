@@ -21,7 +21,7 @@ public class ContadorVisitasEJB {
         contador = new HashMap<Integer, Integer>();
     }
     
-    public void nuevaVista(Integer idUsuario) {
+    public void nuevaVisita(Integer idUsuario) {
         Integer nVisitas = contador.get(idUsuario);
         if(nVisitas == null) {
             contador.put(idUsuario, 1);
