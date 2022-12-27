@@ -34,7 +34,19 @@
                 <p:column headerText="Precio">
                     <h:outputText value="#{plato.precio}" />
                 </p:column>
+                <p:column headerText="Disponibilidad">
+                	<h:panelGroup rendered="#{plato.disponibilidad}">
+						<h:outputText value="Disponible" />
+					</h:panelGroup>
+					<h:panelGroup rendered="#{!plato.disponibilidad}">
+						<h:outputText value="No Disponible" />
+					</h:panelGroup>
+                
+                </p:column>
+                
                 <p:column style="width: 200px;" headerText="Opciones">
+                	<p:commandButton value="Cambiar disponibilidad" icon="fa fa-utensils"
+	                	action="#{restauranteMenuList.cambiarDisponibilidad(plato)}" oncomplete="location.reload()"></p:commandButton>
                 </p:column>
             </p:dataTable>
             <p:growl showDetail="true" id="info2" />

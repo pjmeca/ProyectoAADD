@@ -41,7 +41,7 @@ public class PedidoWeb implements Serializable {
         servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();
     }
     public void loadMenu() {
-        List<PlatoDTO> menu = servicio.getMenuByRestaurante(idRestaurante);
+        List<PlatoDTO> menu = servicio.getMenuByRestaurante(idRestaurante, true);
         items = new ArrayList<>();
         for(PlatoDTO plato : menu) {
         	ItemPedido i = new ItemPedido();

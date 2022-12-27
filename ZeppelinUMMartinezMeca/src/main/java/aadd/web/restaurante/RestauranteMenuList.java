@@ -1,5 +1,6 @@
 package aadd.web.restaurante;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.inject.Named;
 
 import aadd.persistencia.dto.PlatoDTO;
 import aadd.persistencia.dto.RestauranteDTO;
+import aadd.persistencia.jpa.bean.Plato;
 import aadd.persistencia.jpa.bean.TipoUsuario;
 import aadd.web.usuario.UserSessionWeb;
 import aadd.zeppelinum.ServicioGestionPlataforma;
@@ -35,7 +37,7 @@ public class RestauranteMenuList implements Serializable {
         servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();
     }
     public void loadMenu() {
-        menu = servicio.getMenuByRestaurante(idRestaurante);
+        menu = servicio.getMenuByRestaurante(idRestaurante, false);
     }
     public void setIdRestaurante(Integer idRestaurante) {
         this.idRestaurante = idRestaurante;
@@ -87,5 +89,14 @@ public class RestauranteMenuList implements Serializable {
 	}
 	public void setMenu(List<PlatoDTO> menu) {
 		this.menu = menu;
+	}
+	public void cambiarDisponibilidad(PlatoDTO p) {
+		if(servicio.setDisponbilidadPlato(p.getId(), !p.getDisponibilidad()))
+			try {
+	            String contextoURL = facesContext.getExternalContext().getApplicationContextPath();
+	            facesContext.getExternalContext().redirect(contextoURL + "/usuario/formPlatos.xhtml?id=" + idRestaurante);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 	}
 }   
