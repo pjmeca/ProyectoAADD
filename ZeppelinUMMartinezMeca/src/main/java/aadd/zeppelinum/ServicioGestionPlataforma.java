@@ -1,5 +1,6 @@
 package aadd.zeppelinum;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -18,11 +19,13 @@ import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.dto.UsuarioDTO;
 import aadd.persistencia.jpa.EntityManagerHelper;
 import aadd.persistencia.jpa.bean.CategoriaRestaurante;
+import aadd.persistencia.jpa.bean.Incidencia;
 import aadd.persistencia.jpa.bean.Plato;
 import aadd.persistencia.jpa.bean.Restaurante;
 import aadd.persistencia.jpa.bean.TipoUsuario;
 import aadd.persistencia.jpa.bean.Usuario;
 import aadd.persistencia.jpa.dao.CategoriaRestauranteDAO;
+import aadd.persistencia.jpa.dao.IncidenciaDAO;
 import aadd.persistencia.jpa.dao.PlatoDAO;
 import aadd.persistencia.jpa.dao.RestauranteDAO;
 import aadd.persistencia.jpa.dao.UsuarioDAO;
@@ -381,5 +384,54 @@ public class ServicioGestionPlataforma {
 		RestauranteDAO.getRestauranteDAO().addCategorias(
 				RestauranteDAO.getRestauranteDAO().findById(idRestaurante), 
 				categorias);
+	}
+	
+	public Integer registrarIncidencia(Usuario usuario, Restaurante restaurante, String descripcion) {
+
+		EntityManager em = EntityManagerHelper.getEntityManager();
+		try {
+			em.getTransaction().begin();
+
+			Incidencia i = new Incidencia();
+			i.setFechaCreacion(Date.valueOf(LocalDate.now()));
+			i.setUsuario(usuario);
+			i.setRestaurante(restaurante);
+			i.setDescripcion(descripcion);
+			
+			IncidenciaDAO.getIncidenciaDAO().save(i, em);
+			
+			em.getTransaction().commit();
+			return i.getId();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+			em.close();
+		}
+	}
+	
+	public boolean cerrarIncidencia(Integer idIncidencia, String comentario) {
+		EntityManager em = EntityManagerHelper.getEntityManager();
+		try {
+			em.getTransaction().begin();
+
+			Incidencia i = IncidenciaDAO.getIncidenciaDAO().findById(idIncidencia);
+			i.setFechaCierre(Date.valueOf(LocalDate.now()));
+			i.setComentarioCierre(comentario);
+
+			em.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+			em.close();
+		}
 	}
 }

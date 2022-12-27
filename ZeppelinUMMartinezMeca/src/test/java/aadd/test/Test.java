@@ -7,13 +7,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import aadd.persistencia.dto.IncidenciaDTO;
 import aadd.persistencia.dto.PedidoDTO;
 import aadd.persistencia.dto.RestauranteDTO;
+import aadd.persistencia.dto.UsuarioDTO;
 import aadd.persistencia.jpa.bean.CategoriaRestaurante;
+import aadd.persistencia.jpa.bean.Incidencia;
 import aadd.persistencia.jpa.bean.Restaurante;
 import aadd.persistencia.jpa.bean.TipoUsuario;
 import aadd.persistencia.jpa.dao.CategoriaRestauranteDAO;
+import aadd.persistencia.jpa.dao.IncidenciaDAO;
 import aadd.persistencia.jpa.dao.RestauranteDAO;
+import aadd.persistencia.jpa.dao.UsuarioDAO;
 import aadd.persistencia.mongo.bean.ItemPedido;
 import aadd.persistencia.mongo.bean.TipoEstado;
 import aadd.zeppelinum.ServicioGestionPedido;
@@ -155,6 +160,57 @@ class Test {
 		Restaurante r = RestauranteDAO.getRestauranteDAO().findById(1);
 		CategoriaRestaurante c = CategoriaRestauranteDAO.getCategoriaRestauranteDAO().getById(1);
 		RestauranteDAO.getRestauranteDAO().addCategoria(r, c);
+	}
+	
+	@org.junit.jupiter.api.Test
+	void crearCerrarIncidencias() {
+		Restaurante r = RestauranteDAO.getRestauranteDAO().findById(1);
+		UsuarioDTO u = UsuarioDAO.getUsuarioDAO().findByEmail("mclg@um.es").get(0);
+		
+		ServicioGestionPlataforma servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();
+		
+		Integer i = servicio.registrarIncidencia(
+				UsuarioDAO.getUsuarioDAO().findById(u.getId()), r, "Abrir incidencia");
+		assertTrue(IncidenciaDAO.getIncidenciaDAO().findById(i) != null);
+		
+		servicio.cerrarIncidencia(i, "Incidencia cerrada");
+	}
+	
+	@org.junit.jupiter.api.Test
+	void consultasIncidencias() {
+		ServicioGestionPlataforma servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();
+		
+		List<Incidencia> incidencia = new ArrayList<>();
+		incidencia.add(IncidenciaDAO.getIncidenciaDAO().findById(1));
+		assertTrue(incidencia.get(0) != null);
+		List<IncidenciaDTO> incidenciaDTO = IncidenciaDAO.getIncidenciaDAO().transformarToDTO(incidencia);
+		
+		// Usuario
+		List<IncidenciaDTO> l = IncidenciaDAO.getIncidenciaDAO().findIncidenciasByUsuario(UsuarioDAO.getUsuarioDAO().findByEmail("mclg@um.es").get(0).getId());
+		boolean encontrado = false;
+		for(IncidenciaDTO i : l) {
+			if(i.getId() == incidenciaDTO.get(0).getId())
+				encontrado = true;
+		}
+		assertTrue(encontrado);
+		
+		// Sin cerrar
+		Restaurante r = RestauranteDAO.getRestauranteDAO().findById(1);
+		UsuarioDTO u = UsuarioDAO.getUsuarioDAO().findByEmail("mclg@um.es").get(0);
+		Integer i = servicio.registrarIncidencia(
+				UsuarioDAO.getUsuarioDAO().findById(u.getId()), r, "Abrir incidencia");
+		incidencia.add(IncidenciaDAO.getIncidenciaDAO().findById(i));
+		incidenciaDTO = IncidenciaDAO.getIncidenciaDAO().transformarToDTO(incidencia);
+		l = IncidenciaDAO.getIncidenciaDAO().findIncidenciasSinCerrar();
+		boolean encontrado0, encontrado1 = encontrado0 = false;
+		for(IncidenciaDTO in : l) {
+			if(in.getId() == incidenciaDTO.get(0).getId())
+				encontrado0 = true;
+			else if(in.getId() == incidenciaDTO.get(1).getId())
+				encontrado1 = true;
+		}
+		assertTrue(encontrado1);
+		assertFalse(encontrado0);
 	}
 
 }

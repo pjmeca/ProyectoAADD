@@ -1,5 +1,6 @@
 package aadd.persistencia.jpa.dao;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +41,19 @@ public class IncidenciaDAO extends ExtensionDAO<Incidencia>{
 	    }
     }
     
-    public List<IncidenciaDTO> findIncidenciasSinCerrar(){
+    public List<IncidenciaDTO> findIncidenciasByFechaCierre(Date fecha){
     	try {
 	        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Incidencia.findIncidenciasByFechaCierre");
-	        query.setParameter("fechaCierre", null);
+	        query.setParameter("fechaCierre", fecha);
+	        return transformarToDTO(query.getResultList());
+	    } catch (RuntimeException re) {
+	        throw re;
+	    }
+    }
+    
+    public List<IncidenciaDTO> findIncidenciasSinCerrar(){
+    	try {
+	        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Incidencia.findIncidenciasAbiertas");
 	        return transformarToDTO(query.getResultList());
 	    } catch (RuntimeException re) {
 	        throw re;

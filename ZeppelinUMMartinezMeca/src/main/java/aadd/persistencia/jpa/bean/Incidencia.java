@@ -10,11 +10,12 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Table(name="plato")
+@Table(name="incidencia")
 @NamedQueries({
     @NamedQuery(name = "Incidencia.findIncidenciasByRestaurante", query = " SELECT i FROM Incidencia i WHERE i.restaurante.id = :restaurante "),
     @NamedQuery(name = "Incidencia.findIncidenciasByUsuario", query = " SELECT i FROM Incidencia i WHERE i.usuario.id = :usuario "),
-    @NamedQuery(name = "Incidencia.findIncidenciasByFechaCierre", query = " SELECT i FROM Incidencia i WHERE i.fechaCierre = :fechaCierre ")
+    @NamedQuery(name = "Incidencia.findIncidenciasByFechaCierre", query = " SELECT i FROM Incidencia i WHERE i.fechaCierre = :fechaCierre "),
+    @NamedQuery(name = "Incidencia.findIncidenciasAbiertas", query = " SELECT i FROM Incidencia i WHERE i.fechaCierre is NULL ")
 })
 public class Incidencia implements Serializable {
 
@@ -32,6 +33,8 @@ public class Incidencia implements Serializable {
 	private Date fechaCierre;
 	@Column(name="comentarioCierre")
 	private String comentarioCierre;
+	@Column(name="pedido")
+	private Integer idPedido;
 	
 	@ManyToOne
 	@JoinColumn(name="restaurante")
@@ -90,6 +93,22 @@ public class Incidencia implements Serializable {
 
 	public void setRestaurante(Restaurante restaurante) {
 		this.restaurante = restaurante;
+	}
+
+	public Integer getIdPedido() {
+		return idPedido;
+	}
+
+	public void setIdPedido(Integer idPedido) {
+		this.idPedido = idPedido;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
    
 }
