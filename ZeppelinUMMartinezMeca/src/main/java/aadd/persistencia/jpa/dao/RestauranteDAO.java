@@ -3,11 +3,14 @@ package aadd.persistencia.jpa.dao;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
 import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.jpa.EntityManagerHelper;
+import aadd.persistencia.jpa.bean.CategoriaRestaurante;
 import aadd.persistencia.jpa.bean.Restaurante;
 import aadd.persistencia.jpa.bean.Usuario;
 
@@ -163,5 +166,37 @@ public class RestauranteDAO extends ExtensionDAO<Restaurante> {
         } catch (RuntimeException re) {
             throw re;
         }
+    }
+    
+    public void addCategoria(Restaurante restaurante, CategoriaRestaurante categoria) {
+    	restaurante.addCategoria(categoria);
+    	categoria.addRestaurante(restaurante);
+    	
+    	EntityManager em = EntityManagerHelper.getEntityManager();
+    	em.getTransaction().begin();
+    	update(restaurante, em);
+    	em.flush();
+    	em.getTransaction().commit();
+    }
+    
+    public void addCategorias(Restaurante restaurante, List<CategoriaRestaurante> categorias) {
+    	for(CategoriaRestaurante c : categorias)
+    		addCategoria(restaurante, c);
+    }
+    
+    public RestauranteDTO findByIdDTO(int id) {
+    	ArrayList<Restaurante> lista = new ArrayList<>();
+    	lista.add(findById(id));
+    	return transformarToDTO(lista).get(0);
+    }
+    
+    public List<CategoriaRestaurante> getCategorias(int id) {
+    	try {
+	    	 Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Restaurante.findRestauranteById");
+	    	 query.setParameter("id", id);
+	    	 return ((Restaurante) query.getResultList().get(0)).getCategorias();
+	    } catch (RuntimeException re) {
+	        throw re;
+	    }
     }
 }

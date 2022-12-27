@@ -9,7 +9,11 @@ import java.util.List;
 
 import aadd.persistencia.dto.PedidoDTO;
 import aadd.persistencia.dto.RestauranteDTO;
+import aadd.persistencia.jpa.bean.CategoriaRestaurante;
+import aadd.persistencia.jpa.bean.Restaurante;
 import aadd.persistencia.jpa.bean.TipoUsuario;
+import aadd.persistencia.jpa.dao.CategoriaRestauranteDAO;
+import aadd.persistencia.jpa.dao.RestauranteDAO;
 import aadd.persistencia.mongo.bean.ItemPedido;
 import aadd.persistencia.mongo.bean.TipoEstado;
 import aadd.zeppelinum.ServicioGestionPedido;
@@ -145,5 +149,12 @@ class Test {
 		ServicioGestionPedido servicio = ServicioGestionPedido.getServicioGestionPedido();
 		servicio.crearPedido();
 	}*/
+	
+	@org.junit.jupiter.api.Test
+	void addCategoriaRestaurante() {
+		Restaurante r = RestauranteDAO.getRestauranteDAO().findById(1);
+		CategoriaRestaurante c = CategoriaRestauranteDAO.getCategoriaRestauranteDAO().getById(1);
+		RestauranteDAO.getRestauranteDAO().addCategoria(r, c);
+	}
 
 }

@@ -366,4 +366,18 @@ public class ServicioGestionPlataforma {
 	public void nuevaVisitaEstadisticas(Integer idUsuario) {
 		zeppelinumRemoto.nuevaVisita(idUsuario);
 	}
+	
+	public List<CategoriaRestaurante> getNoCategorias(Integer idRestaurante) {
+		List<CategoriaRestaurante> tiene = RestauranteDAO.getRestauranteDAO().getCategorias(idRestaurante);
+		List<CategoriaRestaurante> todas = getAllCategorias();
+		
+		todas.removeAll(tiene);
+		return todas;		
+	}
+	
+	public void addCategorias(Integer idRestaurante, List<CategoriaRestaurante> categorias) {
+		RestauranteDAO.getRestauranteDAO().addCategorias(
+				RestauranteDAO.getRestauranteDAO().findById(idRestaurante), 
+				categorias);
+	}
 }

@@ -11,4 +11,6 @@ public interface DAO<T> {
     public List<T> getAll();
 
     public void save(T t, EntityManager em);
+    
+    public void update(T t, EntityManager em);
 }

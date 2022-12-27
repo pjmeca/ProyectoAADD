@@ -2,6 +2,7 @@ package aadd.persistencia.jpa.bean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.*;
 
@@ -80,8 +81,24 @@ public class CategoriaRestaurante implements Serializable {
 	public void addRestaurante(Restaurante r) {
 		restaurantes.add(r);
 	}
-	
-	
-	
+
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(categoria, id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CategoriaRestaurante other = (CategoriaRestaurante) obj;
+		return Objects.equals(categoria, other.categoria) && Objects.equals(id, other.id);
+	}
    
 }

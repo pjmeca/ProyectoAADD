@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/template_privada.xhtml">
+	<ui:param name="menuseleccionado" value="estilo2" />
+	<ui:define name="title">Editar un restaurante</ui:define>
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="restauranteSeleccionado"
+				value="#{editarRestaurante.idRestauranteSeleccionado}" />
+		</f:metadata>
+	</ui:define>
+	<ui:define name="content">
+
+		<h1>Editar restaurante
+			#{editarRestaurante.getNombreSeleccionado()}</h1>
+		<h:form>
+			<p:button value="Volver" href="editarRestaurante.xhtml"
+				style="margin-right:5px" icon="fa fa-arrow-left"></p:button>
+		
+			<p:selectManyMenu id="categorias"
+				value="#{editarRestaurante.categoriasSeleccionadas}"
+				converter="categoriaConverter" var="c" showCheckbox="true"
+				style="width: 650">
+				<f:selectItems value="#{editarRestaurante.getNoCategorias()}"
+					var="categoria" itemLabel="#{categoria.getCategoria()}"
+					itemValue="#{categoria}" />
+				<p:column>
+					<h:outputText value="#{c.getCategoria()}" />
+				</p:column>
+			</p:selectManyMenu>
+			
+			<h:commandButton value="Continuar"
+				actionListener="#{editarRestaurante.continuar()}"
+				style="margin-right:5px; float: right" icon="fa fa-arrow-right"></h:commandButton>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

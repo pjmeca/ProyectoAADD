@@ -14,7 +14,8 @@ import javax.persistence.*;
 @Table(name = "restaurante")
 @NamedQueries({
     @NamedQuery(name = "Restaurante.findRestaurantesByUsuarioResponsable", query = " SELECT r FROM Restaurante r WHERE r.responsable = :responsable "),
-    @NamedQuery(name = "Restaurante.findAllRestaurantes", query = " SELECT r FROM Restaurante r")
+    @NamedQuery(name = "Restaurante.findAllRestaurantes", query = " SELECT r FROM Restaurante r"),
+    @NamedQuery(name = "Restaurante.findRestauranteById", query = " SELECT r FROM Restaurante r WHERE r.id = :id")
 })
 public class Restaurante implements Serializable {
 	
@@ -124,5 +125,10 @@ public class Restaurante implements Serializable {
 		this.categorias = categorias;
 		for(CategoriaRestaurante c : categorias)
 			c.addRestaurante(this);
+	}
+	
+	public void addCategoria(CategoriaRestaurante c) {
+		if(!categorias.contains(c))
+			categorias.add(c);
 	}
 }

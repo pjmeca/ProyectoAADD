@@ -17,9 +17,9 @@ import aadd.persistencia.mongo.dao.PedidoDAO;
 import aadd.web.usuario.UserSessionWeb;
 import aadd.zeppelinum.ServicioGestionPedido;
 
-@Named
+@Named("gestionarPedidos")
 @ViewScoped
-public class GestionarPedidos implements Serializable {
+public class GestionarPedidosWeb implements Serializable {
 
 	private List<PedidoDTO> pedidos;
 	
