@@ -19,18 +19,28 @@
 				<ul>
 					<li><a href="#{request.contextPath}/restaurante/form.xhtml">Crear
 							restaurante</a></li>
-					<li><a href="#{request.contextPath}/restaurante/editarRestaurante.xhtml">Editar
+					<li><a
+						href="#{request.contextPath}/restaurante/editarRestaurante.xhtml">Editar
 							restaurante</a></li>
 					<li><a
 						href="#{request.contextPath}/restaurante/gestionarPedidos.xhtml">Gestionar
 							pedidos</a></li>
+					<li><a
+						href="#{request.contextPath}/restaurante/gestionarIncidencias.xhtml">Gestionar
+							incidencias</a></li>
 				</ul></li>
 		</h:panelGroup>
+
 		<h:panelGroup
 			rendered="#{userSessionWeb.isLogin() == false || userSessionWeb.isLogin() and userSessionWeb.isCliente()}">
-			<li class="#{estilo2}"><a
-				href="#{request.contextPath}/usuario/buscadorRestaurantes.xhtml">Haz
-					tu pedido</a></li>
+			<li class="#{estilo2}"><a href="#">Pedidos</a>
+				<ul>
+					<li class="#{estilo2}"><a
+						href="#{request.contextPath}/usuario/buscadorRestaurantes.xhtml">Haz
+							tu pedido</a></li>
+					<li><a href="#{request.contextPath}/usuario/incidencia.xhtml">Crear
+							una incidencia</a></li>
+				</ul></li>
 		</h:panelGroup>
 
 		<li class="#{estilo4}"><a

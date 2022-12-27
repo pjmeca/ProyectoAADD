@@ -13,10 +13,12 @@ import aadd.persistencia.mongo.bean.ItemPedido;
 import org.bson.types.ObjectId;
 import aadd.persistencia.mongo.bean.Pedido;
 import aadd.persistencia.mongo.bean.TipoEstado;
+import aadd.persistencia.dto.IncidenciaDTO;
 import aadd.persistencia.dto.OpinionDTO;
 import aadd.persistencia.jpa.EntityManagerHelper;
 import aadd.persistencia.jpa.bean.Restaurante;
 import aadd.persistencia.jpa.bean.Usuario;
+import aadd.persistencia.jpa.dao.IncidenciaDAO;
 import aadd.persistencia.jpa.dao.RestauranteDAO;
 import aadd.persistencia.jpa.dao.UsuarioDAO;
 import aadd.persistencia.mongo.bean.Opinion;
@@ -67,8 +69,16 @@ public class ServicioGestionPedido {
     	return PedidoDAO.getPedidoDAO().asignarRepartidorById(cod, rep);
     }
     
-    public List<PedidoDTO> findByUsuarioRestaurante(Integer codUsu, Integer codRes){
+    public List<PedidoDTO> findPedidosByUsuarioRestaurante(Integer codUsu, Integer codRes){
     	return PedidoDAO.getPedidoDAO().getByUsuarioRestaurante(codUsu,codRes);
+    }
+    
+    public PedidoDTO findByCodigo(String codigo){
+    	return PedidoDAO.getPedidoDAO().getByCodigo(codigo);
+    }
+    
+    public List<PedidoDTO> findPedidosByUsuario(Integer codUsu){
+    	return PedidoDAO.getPedidoDAO().getByUsuario(codUsu);
     }
     
     public boolean opinar(Integer usuario, Integer restaurante, String comentario, Double valoracion) {
@@ -113,7 +123,7 @@ public class ServicioGestionPedido {
             return false;
     }
 
-    public List<OpinionDTO> findByUsuario(Integer usuario) {
+    public List<OpinionDTO> findOpinionesByUsuario(Integer usuario) {
         OpinionDAO opinionDAO = OpinionDAO.getOpinionDAO();
         List<Opinion> opiniones = opinionDAO.findByUsuario(usuario);
         List<OpinionDTO> opinionesDTO = new ArrayList<>();

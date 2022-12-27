@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template/template_privada.xhtml">
+    <ui:param name="menuseleccionado" value="estilo2" />
+    <ui:define name="title">Crear incidencia</ui:define>
+    <ui:define name="content">
+    
+    <h:form>
+		<p:dataTable var="pedido"
+			value="#{crearIncidenciaWeb.pedidos}"
+			rowKey="#{pedido.codigo}"
+			selection="#{crearIncidenciaWeb.pedidoSeleccionado}"
+			selectionMode="single"
+			widgetVar="pedidosTabla"			
+			rows="5" paginator="true" paginatorPosition="bottom" 
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	      	currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} pedidos"
+            rowsPerPageTemplate="5,10,15,20,{ShowAll|'Todos'}"
+            sortMode="single"
+            >
+			
+			<p:ajax event="rowSelect" listener="#{crearIncidenciaWeb.onRowSelect}"/>
+
+			<p:column headerText="Código">
+				<h:outputText value="#{pedido.codigo}" />
+			</p:column>
+			<p:column headerText="Importe">
+				<h:outputText value="#{pedido.importe}" />
+			</p:column>
+			<p:column headerText="Fecha" sortBy="#{pedido.fechaHora}" sortOrder="descending">
+				<h:outputText value="#{pedido.fechaHora}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+
+	</ui:define>
+</ui:composition>

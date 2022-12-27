@@ -26,10 +26,17 @@ public class IncidenciaDAO extends ExtensionDAO<Incidencia>{
     public List<IncidenciaDTO> transformarToDTO(List<Incidencia> incidencias) {
     	List<IncidenciaDTO> menu = new ArrayList<IncidenciaDTO>();
 	    for (Incidencia i : incidencias) {
-	        menu.add(new IncidenciaDTO(i.getId(), i.getFechaCreacion(), i.getDescripcion(), i.getFechaCierre(), i.getComentarioCierre()));	   
+	        menu.add(new IncidenciaDTO(i.getId(), i.getFechaCreacion(), i.getDescripcion(), i.getFechaCierre(), i.getComentarioCierre(), i.getRestaurante().getId()));	   
 	    }
 	    return menu;
 	}
+    
+    public IncidenciaDTO findByIdDTO(Integer idIncidencia) {
+    	Incidencia i = findById(idIncidencia);
+    	List<Incidencia> l = new ArrayList<>();
+    	l.add(i);
+    	return transformarToDTO(l).get(0);
+    }
     
     public List<IncidenciaDTO> findIncidenciasByUsuario(Integer usuario){
     	try {
@@ -54,6 +61,16 @@ public class IncidenciaDAO extends ExtensionDAO<Incidencia>{
     public List<IncidenciaDTO> findIncidenciasSinCerrar(){
     	try {
 	        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Incidencia.findIncidenciasAbiertas");
+	        return transformarToDTO(query.getResultList());
+	    } catch (RuntimeException re) {
+	        throw re;
+	    }
+    }
+    
+    public List<IncidenciaDTO> findIncidenciasSinCerrarByRestaurante(Integer restaurante) {
+    	try {
+	        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Incidencia.findIncidenciasAbiertasByRestaurante");
+	        query.setParameter("restaurante", restaurante);
 	        return transformarToDTO(query.getResultList());
 	    } catch (RuntimeException re) {
 	        throw re;

@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template/template_privada.xhtml">
+    <ui:param name="menuseleccionado" value="estilo2" />
+    <ui:define name="title">Crear incidencia</ui:define>   
+    
+    <ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="codigoPedido"
+				value="#{crearIncidenciaWeb.codigoPedido}" />
+		</f:metadata>
+	</ui:define>
+     
+    <ui:define name="content">
+    
+    <h:form>
+    	<h5>Código de pedido: </h5>
+    	<h:outputText value="#{crearIncidenciaWeb.codigoPedido}" />
+    	
+    	<h5>Restaurante: </h5>
+    	<h:outputText value="#{crearIncidenciaWeb.getNombreRestaurante()}" />
+    	
+    	<h5>Descripción: </h5>
+    	<h:inputTextarea value="#{crearIncidenciaWeb.descripcion}" rows="5" />
+
+		<h:commandButton value="Crear incidencia" actionListener="#{crearIncidenciaWeb.registrarIncidencia()}"
+				style="margin-right:5px; float: right" icon="fa fa-arrow-right"></h:commandButton>	
+	</h:form>
+
+	</ui:define>
+</ui:composition>

@@ -12,15 +12,17 @@ public class IncidenciaDTO implements Serializable{
 	private String descripcion;
 	private Date fechaCierre;
 	private String comentarioCierre;
+	private Integer idRestaurante;
 	
 	public IncidenciaDTO(Integer id, Date fechaCreacion, String descripcion, Date fechaCierre,
-			String comentarioCierre) {
+			String comentarioCierre, Integer idRestaurante) {
 		super();
 		this.id = id;
 		this.fechaCreacion = fechaCreacion;
 		this.descripcion = descripcion;
 		this.fechaCierre = fechaCierre;
 		this.comentarioCierre = comentarioCierre;
+		this.idRestaurante = idRestaurante;
 	}
 
 	public Integer getId() {
@@ -62,4 +64,13 @@ public class IncidenciaDTO implements Serializable{
 	public void setComentarioCierre(String comentarioCierre) {
 		this.comentarioCierre = comentarioCierre;
 	}
+
+	public Integer getIdRestaurante() {
+		return idRestaurante;
+	}
+
+	public void setIdRestaurante(Integer idRestaurante) {
+		this.idRestaurante = idRestaurante;
+	}
+	
 }

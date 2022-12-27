@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template/template_privada.xhtml">
+    <ui:param name="menuseleccionado" value="estilo2" />
+    <ui:define name="title">Gestionar incidencias</ui:define>
+    <ui:define name="content">
+    
+    <h:form>
+		<p:dataTable var="incidencia"
+			value="#{gestionarIncidenciasWeb.incidencias}"
+			rowKey="#{incidencia.id}"
+			selection="#{gestionarIncidenciasWeb.incidenciaSeleccionada}"
+			selectionMode="single"
+			widgetVar="incidenciasTabla"			
+			rows="5" paginator="true" paginatorPosition="bottom" 
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	      	currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} incidencias"
+            rowsPerPageTemplate="5,10,15,20,{ShowAll|'Todas'}"
+            sortMode="single"
+            >
+			
+			<p:ajax event="rowSelect" listener="#{gestionarIncidenciasWeb.onRowSelect}"/>
+
+			<p:column headerText="Id">
+				<h:outputText value="#{incidencia.id}" />
+			</p:column>
+			<p:column headerText="Restaurante">
+				<h:outputText value="#{gestionarIncidenciasWeb.getNombreRestaurante(incidencia)}" />
+			</p:column>
+			<p:column headerText="Fecha" sortBy="#{incidencia.fechaCreacion}" sortOrder="descending">
+				<h:outputText value="#{incidencia.fechaCreacion}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+
+	</ui:define>
+</ui:composition>

@@ -15,7 +15,8 @@ import javax.persistence.*;
     @NamedQuery(name = "Incidencia.findIncidenciasByRestaurante", query = " SELECT i FROM Incidencia i WHERE i.restaurante.id = :restaurante "),
     @NamedQuery(name = "Incidencia.findIncidenciasByUsuario", query = " SELECT i FROM Incidencia i WHERE i.usuario.id = :usuario "),
     @NamedQuery(name = "Incidencia.findIncidenciasByFechaCierre", query = " SELECT i FROM Incidencia i WHERE i.fechaCierre = :fechaCierre "),
-    @NamedQuery(name = "Incidencia.findIncidenciasAbiertas", query = " SELECT i FROM Incidencia i WHERE i.fechaCierre is NULL ")
+    @NamedQuery(name = "Incidencia.findIncidenciasAbiertas", query = " SELECT i FROM Incidencia i WHERE i.fechaCierre is NULL "),
+    @NamedQuery(name = "Incidencia.findIncidenciasAbiertasByRestaurante", query = " SELECT i FROM Incidencia i WHERE i.restaurante.id = :restaurante AND i.fechaCierre is NULL")
 })
 public class Incidencia implements Serializable {
 
@@ -34,7 +35,7 @@ public class Incidencia implements Serializable {
 	@Column(name="comentarioCierre")
 	private String comentarioCierre;
 	@Column(name="pedido")
-	private Integer idPedido;
+	private String codPedido;
 	
 	@ManyToOne
 	@JoinColumn(name="restaurante")
@@ -95,12 +96,12 @@ public class Incidencia implements Serializable {
 		this.restaurante = restaurante;
 	}
 
-	public Integer getIdPedido() {
-		return idPedido;
+	public String getIdPedido() {
+		return codPedido;
 	}
 
-	public void setIdPedido(Integer idPedido) {
-		this.idPedido = idPedido;
+	public void setIdPedido(String codPedido) {
+		this.codPedido = codPedido;
 	}
 
 	public Usuario getUsuario() {

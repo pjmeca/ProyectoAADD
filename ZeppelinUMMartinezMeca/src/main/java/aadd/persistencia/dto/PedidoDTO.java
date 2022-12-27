@@ -16,9 +16,10 @@ public class PedidoDTO implements Serializable{
 	    private String comentarios;
 	    private String datosDireccion;
 	    private Double importe;
+	    private LocalDateTime fechaHora;
 	    private List<EstadoPedido> estados;
 	    
-	    public PedidoDTO(String codigo, Integer cliente, Integer restaurante, String comentarios, String datosDireccion, Double importe, List<EstadoPedido> estados) {
+	    public PedidoDTO(String codigo, Integer cliente, Integer restaurante, String comentarios, String datosDireccion, Double importe, List<EstadoPedido> estados, LocalDateTime fechaHora) {
 	    	this.codigo = codigo;
 	    	this.cliente = cliente;
 	    	this.restaurante = restaurante;
@@ -26,6 +27,7 @@ public class PedidoDTO implements Serializable{
 	    	this.datosDireccion = datosDireccion;
 	    	this.importe = importe;
 	    	this.estados = estados;
+	    	this.fechaHora = fechaHora;
 	    }
 	    
 		public Integer getCliente() {
@@ -81,6 +83,14 @@ public class PedidoDTO implements Serializable{
 			return getUltimoEstado().equals(estado);
 		}
 		
+		public LocalDateTime getFechaHora() {
+			return fechaHora;
+		}
+
+		public void setFechaHora(LocalDateTime fechaHora) {
+			this.fechaHora = fechaHora;
+		}
+
 		public List<String> getSiguientesEstados() {
 			List<String> estados = new ArrayList<>();
 			

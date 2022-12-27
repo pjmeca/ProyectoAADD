@@ -14,6 +14,7 @@ import com.mongodb.client.model.geojson.Position;
 
 import aadd.persistencia.dto.EstadisticaOpinionDTO;
 import aadd.persistencia.dto.EstadisticaPedidosRestauranteDTO;
+import aadd.persistencia.dto.IncidenciaDTO;
 import aadd.persistencia.dto.PlatoDTO;
 import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.dto.UsuarioDTO;
@@ -336,6 +337,8 @@ public class ServicioGestionPlataforma {
 	}
 
 	public RestauranteDTO getRestaurante(Integer idRestaurante) {
+		if(idRestaurante == null)
+			return null;
 		Restaurante restaurante = RestauranteDAO.getRestauranteDAO().findById(idRestaurante);
 		return new RestauranteDTO(idRestaurante, restaurante.getNombre(), restaurante.getValoracionGlobal(), restaurante.getNumPlatos());
 	}
@@ -386,7 +389,7 @@ public class ServicioGestionPlataforma {
 				categorias);
 	}
 	
-	public Integer registrarIncidencia(Usuario usuario, Restaurante restaurante, String descripcion) {
+	public Integer registrarIncidencia(Usuario usuario, Restaurante restaurante, String codPedido, String descripcion) {
 
 		EntityManager em = EntityManagerHelper.getEntityManager();
 		try {
@@ -397,6 +400,7 @@ public class ServicioGestionPlataforma {
 			i.setUsuario(usuario);
 			i.setRestaurante(restaurante);
 			i.setDescripcion(descripcion);
+			i.setIdPedido(codPedido);
 			
 			IncidenciaDAO.getIncidenciaDAO().save(i, em);
 			
@@ -411,6 +415,12 @@ public class ServicioGestionPlataforma {
 			}
 			em.close();
 		}
+	}
+	
+	public Integer registrarIncidencia(Integer codUsuario, Integer codRestaurante,  String codPedido, String descripcion) {
+		Usuario u = UsuarioDAO.getUsuarioDAO().findById(codUsuario);
+		Restaurante r = RestauranteDAO.getRestauranteDAO().findById(codRestaurante);
+		return registrarIncidencia(u, r, codPedido, descripcion);
 	}
 	
 	public boolean cerrarIncidencia(Integer idIncidencia, String comentario) {
@@ -433,5 +443,13 @@ public class ServicioGestionPlataforma {
 			}
 			em.close();
 		}
+	}
+	
+	public List<IncidenciaDTO> findIncidenciasAbiertasByRestaurante(Integer codRes) {
+    	return IncidenciaDAO.getIncidenciaDAO().findIncidenciasSinCerrarByRestaurante(codRes);
+    }
+	
+	public IncidenciaDTO getIncidenciaById(Integer idIncidencia) {
+		return IncidenciaDAO.getIncidenciaDAO().findByIdDTO(idIncidencia);
 	}
 }

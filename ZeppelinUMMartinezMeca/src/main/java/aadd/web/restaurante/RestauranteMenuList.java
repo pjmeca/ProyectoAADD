@@ -91,6 +91,17 @@ public class RestauranteMenuList implements Serializable {
 		this.menu = menu;
 	}
 	public void cambiarDisponibilidad(PlatoDTO p) {
+		if(!sesionWeb.isRestaurante()) {
+			try {
+	            String contextoURL = facesContext.getExternalContext().getApplicationContextPath();
+	            facesContext.getExternalContext().redirect(contextoURL);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+			return;
+		}
+			
+		
 		if(servicio.setDisponbilidadPlato(p.getId(), !p.getDisponibilidad()))
 			try {
 	            String contextoURL = facesContext.getExternalContext().getApplicationContextPath();

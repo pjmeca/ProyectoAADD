@@ -57,8 +57,9 @@
                         <h:outputText value="Título" />
                         <h:inputText value="#{restauranteMenuList.titulo}" />
                         <h:outputText value="Descripción" />
-                  <h:inputTextarea value="#{restauranteMenuList.descripcion}" rows="5" />
-                        <h:outputText value="Precio" />
+						<h:inputTextarea value="#{restauranteMenuList.descripcion}"
+							rows="5" />
+						<h:outputText value="Precio" />
                 <p:inputNumber value="#{restauranteMenuList.precio}" decimalPlaces="2" />
                     <p:commandButton value="Cerrar" onclick="PF('nuevoPlato').hide();" />
                         <p:commandButton value="Crear plato" icon="fa fa-bowl-food"

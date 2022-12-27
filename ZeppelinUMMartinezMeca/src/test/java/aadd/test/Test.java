@@ -130,7 +130,7 @@ class Test {
 	@org.junit.jupiter.api.Test
 	void buscarOpiniones() {
 		ServicioGestionPedido servicio = ServicioGestionPedido.getServicioGestionPedido();
-		assertTrue(servicio.findByUsuario(2).size() == 4);
+		assertTrue(servicio.findOpinionesByUsuario(2).size() == 4);
 		assertTrue(servicio.findByRestaurante(3).size() == 2);
 	}
 
@@ -143,7 +143,7 @@ class Test {
 				"esto es un comentario", "atico", 50.0, 21, LocalDateTime.now(), l) != null);
 		assertTrue(servicio.editarEstado("pedidoA", TipoEstado.ACEPTADO, LocalDateTime.now()) != null);
 		assertTrue(servicio.asignarRepartidor("pedidoA", 42));
-		List<PedidoDTO> list = servicio.findByUsuarioRestaurante(1, 10);
+		List<PedidoDTO> list = servicio.findPedidosByUsuarioRestaurante(1, 10);
 		PedidoDTO p = list.get(0);
 		assertTrue(p.getCliente() == 1 && p.getRestaurante() == 10 && p.getComentarios().equals("esto es un comentario")
 				&& p.getDatosDireccion().equals("atico") && p.getImporte() == 50.0);
@@ -170,7 +170,7 @@ class Test {
 		ServicioGestionPlataforma servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();
 		
 		Integer i = servicio.registrarIncidencia(
-				UsuarioDAO.getUsuarioDAO().findById(u.getId()), r, "Abrir incidencia");
+				UsuarioDAO.getUsuarioDAO().findById(u.getId()), r, "0", "Abrir incidencia");
 		assertTrue(IncidenciaDAO.getIncidenciaDAO().findById(i) != null);
 		
 		servicio.cerrarIncidencia(i, "Incidencia cerrada");
@@ -198,7 +198,7 @@ class Test {
 		Restaurante r = RestauranteDAO.getRestauranteDAO().findById(1);
 		UsuarioDTO u = UsuarioDAO.getUsuarioDAO().findByEmail("mclg@um.es").get(0);
 		Integer i = servicio.registrarIncidencia(
-				UsuarioDAO.getUsuarioDAO().findById(u.getId()), r, "Abrir incidencia");
+				UsuarioDAO.getUsuarioDAO().findById(u.getId()), r, "0", "Abrir incidencia");
 		incidencia.add(IncidenciaDAO.getIncidenciaDAO().findById(i));
 		incidenciaDTO = IncidenciaDAO.getIncidenciaDAO().transformarToDTO(incidencia);
 		l = IncidenciaDAO.getIncidenciaDAO().findIncidenciasSinCerrar();

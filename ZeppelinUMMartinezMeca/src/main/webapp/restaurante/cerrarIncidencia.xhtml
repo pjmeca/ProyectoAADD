@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template/template_privada.xhtml">
+    <ui:param name="menuseleccionado" value="estilo2" />
+    <ui:define name="title">Cerrar incidencia</ui:define>   
+    
+    <ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="idIncidencia"
+				value="#{gestionarIncidenciasWeb.idIncidencia}" />
+		</f:metadata>
+	</ui:define>
+     
+    <ui:define name="content">
+    
+    <h:form>
+    	<h5>Descripción del cliente: </h5>
+    	<h:inputTextarea value="#{gestionarIncidenciasWeb.descripcion}" rows="5" readonly="true"/>
+    	
+    	<h5>Comentario: </h5>
+    	<h:inputTextarea value="#{gestionarIncidenciasWeb.comentario}" rows="5"/>
+
+		<h:commandButton value="Cerrar incidencia" actionListener="#{gestionarIncidenciasWeb.cerrarIncidencia()}"
+				style="margin-right:5px; float: right" icon="fa fa-arrow-right"></h:commandButton>	
+	</h:form>
+
+	</ui:define>
+</ui:composition>

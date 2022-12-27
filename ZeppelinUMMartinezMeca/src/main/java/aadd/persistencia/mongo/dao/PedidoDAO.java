@@ -39,9 +39,20 @@ public class PedidoDAO extends ExtensionMongoDAO<Pedido>{
     public List<PedidoDTO> transformarToDTO(List<Pedido> pedidos) {
         List<PedidoDTO> pedidosDTO = new ArrayList<>();
         for (Pedido p : pedidos) {
-            pedidosDTO.add(new PedidoDTO(p.getCodigo(), p.getCliente(), p.getRestaurante(), p.getComentarios(), p.getDatosDireccion(), p.getImporte(), p.getEstados()));
+            pedidosDTO.add(new PedidoDTO(p.getCodigo(), p.getCliente(), p.getRestaurante(), p.getComentarios(), p.getDatosDireccion(), p.getImporte(), p.getEstados(), p.getFechaHora()));
         }
         return pedidosDTO;
+    }
+    
+    public PedidoDTO getByCodigo(String codigo) {
+    	Bson query = Filters.eq("codigo", codigo);
+    	FindIterable<Pedido> resultados = collection.find(query);
+		MongoCursor<Pedido> it = resultados.iterator();
+		List<Pedido> ped = new ArrayList<Pedido>();
+		while (it.hasNext()) {
+			ped.add(it.next());
+		}
+		return transformarToDTO(ped).get(0);
     }
     
     public EstadoPedido editarEstadoById(String cod, TipoEstado estado, LocalDateTime fecha) {
@@ -64,6 +75,17 @@ public class PedidoDAO extends ExtensionMongoDAO<Pedido>{
     
     public List<PedidoDTO> getByUsuarioRestaurante(Integer codUsu, Integer codRes) {
     	Bson query = Filters.and(Filters.eq("cliente", codUsu),Filters.eq("restaurante",codRes));
+    	FindIterable<Pedido> resultados = collection.find(query);
+		MongoCursor<Pedido> it = resultados.iterator();
+		List<Pedido> ped = new ArrayList<Pedido>();
+		while (it.hasNext()) {
+			ped.add(it.next());
+		}
+		return transformarToDTO(ped);
+    }
+    
+    public List<PedidoDTO> getByUsuario(Integer codUsu) {
+    	Bson query = Filters.eq("cliente", codUsu);
     	FindIterable<Pedido> resultados = collection.find(query);
 		MongoCursor<Pedido> it = resultados.iterator();
 		List<Pedido> ped = new ArrayList<Pedido>();
