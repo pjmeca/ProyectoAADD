@@ -26,10 +26,20 @@ public class RegistroWeb implements Serializable {
 	protected FacesContext facesContext;
 
 	public void registro() {
-		/**
-		 * TODO Comprobar que los campos no llegan vacíos Comprobar que clave y clave2
-		 * son iguales
-		 */
+		// Comprobar que los campos no están vacíos
+		if(nombre.isBlank() || apellidos.isBlank() || fechaNacimiento == null || correo.isBlank() || clave.isBlank() || tipo.isBlank()) {
+			facesContext.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Por favor, rellena todos los campos!"));
+			return;
+		}
+		
+		// Comprobar que las claves coinciden
+		if(!clave.equals(clave2)) {
+			facesContext.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Las claves no coinciden!"));
+			return;
+		}
+		
 		if (ServicioGestionPlataforma.getServicioGestionPlataforma().isUsuarioRegistrado(correo)) {
 			facesContext.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Ya existe un usuario con el email " + correo));

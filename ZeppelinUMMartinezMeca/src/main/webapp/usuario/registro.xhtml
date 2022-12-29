@@ -14,21 +14,21 @@ xmlns="http://www.w3.org/1999/xhtml"
         <h:form>
             <h:panelGrid columns="2">
                 <h:outputText value="Nombre"></h:outputText>
-                <h:inputText id="nombre" value="#{registroWeb.nombre}" />
+                <h:inputText id="nombre" value="#{registroWeb.nombre}" required="true"/>
                 <h:outputText value="Apellidos"></h:outputText>
-                <h:inputText value="#{registroWeb.apellidos}"></h:inputText>
+                <h:inputText value="#{registroWeb.apellidos}" required="true"></h:inputText>
 
                 <h:outputText value="Correo"></h:outputText>
-                <h:inputText value="#{registroWeb.correo}"></h:inputText>
+                <h:inputText value="#{registroWeb.correo}" required="true"></h:inputText>
 
                 <h:outputText value="Clave"></h:outputText>
-                <h:inputSecret value="#{registroWeb.clave}">
+                <h:inputSecret value="#{registroWeb.clave}" required="true">
                     <f:validateLength minimum="4" />
                 </h:inputSecret>
                 <h:outputText value="Repetir Clave"></h:outputText>
                 <h:inputSecret value="#{registroWeb.clave2}"></h:inputSecret>
                 <h:outputText value="Fecha Nacimiento"></h:outputText>
-                <h:inputText value="#{registroWeb.fechaNacimiento}">
+                <h:inputText value="#{registroWeb.fechaNacimiento}" required="true">
                     <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
                 </h:inputText>
                 <h:outputText value="Tipo de cliente"></h:outputText>
