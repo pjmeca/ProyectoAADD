@@ -43,9 +43,12 @@
 				</ul></li>
 		</h:panelGroup>
 
-		<li class="#{estilo4}"><a
-			href="#{request.contextPath}/noticias/infousuarios.xhtml">Comunicar
-				novedades</a></li>
+		<h:panelGroup
+			rendered="#{userSessionWeb.isLogin() and userSessionWeb.isAdmin()}">
+			<li class="#{estilo4}"><a
+				href="#{request.contextPath}/noticias/infousuarios.xhtml">Comunicar
+					novedades</a></li>
+		</h:panelGroup>
 
 		<h:panelGroup
 			rendered="#{userSessionWeb.isLogin() and userSessionWeb.isAdmin()}">
