@@ -143,7 +143,7 @@ class Test {
 				"esto es un comentario", "atico", 50.0, 21, LocalDateTime.now(), l) != null);
 		assertTrue(servicio.editarEstado("pedidoA", TipoEstado.ACEPTADO, LocalDateTime.now()) != null);
 		assertTrue(servicio.asignarRepartidor("pedidoA", 42));
-		List<PedidoDTO> list = servicio.findPedidosByUsuarioRestaurante(1, 10);
+		List<PedidoDTO> list = servicio.findPedidosByUsuarioYRestaurante(1, 10);
 		PedidoDTO p = list.get(0);
 		assertTrue(p.getCliente() == 1 && p.getRestaurante() == 10 && p.getComentarios().equals("esto es un comentario")
 				&& p.getDatosDireccion().equals("atico") && p.getImporte() == 50.0);

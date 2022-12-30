@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
@@ -12,6 +13,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import aadd.persistencia.dto.PedidoDTO;
+import aadd.persistencia.dto.RestauranteDTO;
+import aadd.persistencia.jpa.dao.RestauranteDAO;
 import aadd.persistencia.mongo.bean.TipoEstado;
 import aadd.persistencia.mongo.dao.PedidoDAO;
 import aadd.web.usuario.UserSessionWeb;
@@ -29,7 +32,10 @@ public class GestionarPedidosWeb implements Serializable {
     private FacesContext facesContext;
 	
 	public void init() {
-		pedidos = PedidoDAO.getPedidoDAO().getByRestaurante(sesion.getUsuario().getId());
+		List<RestauranteDTO> restaurantes = RestauranteDAO.getRestauranteDAO().findRestaurantesByUsuarioResponsableId(sesion.getUsuario().getId());
+		pedidos = new ArrayList<>();
+		for(RestauranteDTO r : restaurantes)
+			pedidos.addAll(PedidoDAO.getPedidoDAO().getByRestaurante(r.getId()));
 	}
 	
 	public void setEstado(PedidoDTO pedido, String estado) {

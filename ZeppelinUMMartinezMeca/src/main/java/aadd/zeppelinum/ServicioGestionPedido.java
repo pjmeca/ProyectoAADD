@@ -57,6 +57,19 @@ public class ServicioGestionPedido {
     	
     }
     
+    public boolean crearPedido(Integer usu, Integer res, LocalDateTime fH, LocalDateTime fE, String coment, String datosDir
+    		, Double importe, List<ItemPedido> items) {
+        //se crea un pedido, este método deberá tener los atributos necesarios
+    	
+    	String id = registrarPedido(usu, res, fH, fE, coment, datosDir, importe, 0, fH, items);
+    	
+        //una vez creado, nos quedamos con el id que le ha generado mongodb y con eso activamos el timer
+        if (id != null)
+        	zeppelinumRemoto.pedidoIniciado(id);
+        
+        return id != null;
+    } 
+    
     public static String getNextCodigoPedido() {
     	return String.valueOf(nextCodigoPedido++);
     }
@@ -69,7 +82,7 @@ public class ServicioGestionPedido {
     	return PedidoDAO.getPedidoDAO().asignarRepartidorById(cod, rep);
     }
     
-    public List<PedidoDTO> findPedidosByUsuarioRestaurante(Integer codUsu, Integer codRes){
+    public List<PedidoDTO> findPedidosByUsuarioYRestaurante(Integer codUsu, Integer codRes){
     	return PedidoDAO.getPedidoDAO().getByUsuarioRestaurante(codUsu,codRes);
     }
     
@@ -153,18 +166,5 @@ public class ServicioGestionPedido {
             opinionesDTO.add(opinionDTO);
         }
         return opinionesDTO;
-    }
-    
-    public boolean crearPedido(Integer usu, Integer res, LocalDateTime fH, LocalDateTime fE, String coment, String datosDir
-    		, Double importe, List<ItemPedido> items) {
-        //se crea un pedido, este método deberá tener los atributos necesarios
-    	
-    	String id = registrarPedido(usu, res, fH, fE, coment, datosDir, importe, 0, fH, items);
-    	
-        //una vez creado, nos quedamos con el id que le ha generado mongodb y con eso activamos el timer
-        if (id != null)
-        	zeppelinumRemoto.pedidoIniciado(id);
-        
-        return id != null;
     }
 }
