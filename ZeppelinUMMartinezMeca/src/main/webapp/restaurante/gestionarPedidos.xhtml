@@ -28,22 +28,22 @@
 
 				<p:column headerText="Cambiar a estado">
 					<h:panelGroup rendered="#{pedido.isUltimoEstado('INICIO')}">
-						<p:commandButton value="Aceptar" icon="pi pi-home"
+						<p:commandButton value="Aceptar" icon="pi pi-check"
 							action="#{gestionarPedidos.setEstado(pedido, 'ACEPTADO')}">
 						</p:commandButton>
-						<p:commandButton value="Cancelar" icon="pi pi-home"
+						<p:commandButton value="Cancelar" icon="pi pi-times"
 							action="#{gestionarPedidos.setEstado(pedido, 'CANCELADO')}">
 						</p:commandButton>
 					</h:panelGroup>
 					
 					<h:panelGroup rendered="#{pedido.isUltimoEstado('ACEPTADO')}">
-						<p:commandButton value="Preparado" icon="pi pi-home"
+						<p:commandButton value="Preparado" icon="pi pi-box"
 							action="#{gestionarPedidos.setEstado(pedido, 'PREPARADO')}">
 						</p:commandButton>
 					</h:panelGroup>
 					
 					<h:panelGroup rendered="#{pedido.isUltimoEstado('PREPARADO')}">
-						<p:commandButton value="Recogido" icon="pi pi-home"
+						<p:commandButton value="Recogido" icon="pi pi-send"
 							action="#{gestionarPedidos.setEstado(pedido, 'RECOGIDO')}">
 						</p:commandButton>
 					</h:panelGroup>
