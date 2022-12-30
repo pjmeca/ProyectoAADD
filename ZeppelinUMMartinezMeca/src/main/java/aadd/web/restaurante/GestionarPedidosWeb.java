@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -31,7 +32,17 @@ public class GestionarPedidosWeb implements Serializable {
 	@Inject
     private FacesContext facesContext;
 	
+	@PostConstruct
 	public void init() {
+		if(sesion.isLogin() && !sesion.isRestaurante()) {
+			try {
+	            String contextoURL = facesContext.getExternalContext().getApplicationContextPath();
+	            facesContext.getExternalContext().redirect(contextoURL);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		}
+		
 		List<RestauranteDTO> restaurantes = RestauranteDAO.getRestauranteDAO().findRestaurantesByUsuarioResponsableId(sesion.getUsuario().getId());
 		pedidos = new ArrayList<>();
 		for(RestauranteDTO r : restaurantes)

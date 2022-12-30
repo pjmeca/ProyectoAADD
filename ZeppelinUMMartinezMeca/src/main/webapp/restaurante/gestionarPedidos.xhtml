@@ -6,11 +6,6 @@
 	template="/WEB-INF/template/template_privada.xhtml">
 	<ui:param name="menuseleccionado" value="estilo2" />
 	<ui:define name="title">Gestionar pedidos</ui:define>
-	<ui:define name="metadata">
-		<f:metadata>
-			<f:viewAction action="#{gestionarPedidos.init()}" />
-		</f:metadata>
-	</ui:define>
 	<ui:define name="content">
 		<h:form id="menu">
 			<p:dataTable id="checkboxDT" var="pedido"
