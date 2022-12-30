@@ -25,11 +25,9 @@ public class GestionarIncidenciasWeb implements Serializable{
 	private IncidenciaDTO incidenciaSeleccionada;
 	private Integer idIncidencia;
 	private String comentario;
-	private String descripcion;
 	
 	@Inject
     private FacesContext facesContext;
-	
 	@Inject
 	private UserSessionWeb sesionWeb;
 	
@@ -39,6 +37,15 @@ public class GestionarIncidenciasWeb implements Serializable{
 	
 	@PostConstruct
 	public void init() {
+		if(sesionWeb.isLogin() && !sesionWeb.isRestaurante()) {
+			try {
+	            String contextoURL = facesContext.getExternalContext().getApplicationContextPath();
+	            facesContext.getExternalContext().redirect(contextoURL);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		}
+		
 		assert(sesionWeb.isRestaurante());
         UsuarioDTO u  = sesionWeb.getUsuario();
         incidencias = servicio.findIncidenciasAbiertasByRestaurante(u.getId());
