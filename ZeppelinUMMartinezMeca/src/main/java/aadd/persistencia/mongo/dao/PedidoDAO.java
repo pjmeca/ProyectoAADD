@@ -17,6 +17,7 @@ import aadd.persistencia.dto.PedidoDTO;
 import aadd.persistencia.dto.UsuarioDTO;
 import aadd.persistencia.jpa.bean.Usuario;
 import aadd.persistencia.mongo.bean.EstadoPedido;
+import aadd.persistencia.mongo.bean.ItemPedido;
 import aadd.persistencia.mongo.bean.Pedido;
 import aadd.persistencia.mongo.bean.TipoEstado;
 
@@ -42,6 +43,15 @@ public class PedidoDAO extends ExtensionMongoDAO<Pedido>{
             pedidosDTO.add(new PedidoDTO(p.getCodigo(), p.getCliente(), p.getRestaurante(), p.getComentarios(), p.getDatosDireccion(), p.getImporte(), p.getEstados(), p.getFechaHora()));
         }
         return pedidosDTO;
+    }
+    
+    public String registrarPedido(String cod, Integer usu, Integer res, LocalDateTime fH, LocalDateTime fE, String coment, String datosDir
+    		, Double importe, Integer rep, LocalDateTime fEstado, List<ItemPedido> items) {
+    	Pedido p = new Pedido(cod,usu,res,fH,fE,coment,datosDir,importe,rep,fEstado,items);
+    	if (save(p) != null)
+    		return p.getCodigo();
+    	else
+    		return null;
     }
     
     public PedidoDTO getByCodigo(String codigo) {

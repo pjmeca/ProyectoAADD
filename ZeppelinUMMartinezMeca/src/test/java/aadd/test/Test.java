@@ -21,6 +21,7 @@ import aadd.persistencia.jpa.dao.RestauranteDAO;
 import aadd.persistencia.jpa.dao.UsuarioDAO;
 import aadd.persistencia.mongo.bean.ItemPedido;
 import aadd.persistencia.mongo.bean.TipoEstado;
+import aadd.persistencia.mongo.dao.PedidoDAO;
 import aadd.zeppelinum.ServicioGestionPedido;
 import aadd.zeppelinum.ServicioGestionPlataforma;
 
@@ -139,7 +140,7 @@ class Test {
 		ServicioGestionPedido servicio = ServicioGestionPedido.getServicioGestionPedido();
 		List<ItemPedido> l = new ArrayList<ItemPedido>();
 		l.add(new ItemPedido(3, 1, 6.0));
-		assertTrue(servicio.registrarPedido(1, 10, LocalDateTime.now(), LocalDateTime.now(),
+		assertTrue(PedidoDAO.getPedidoDAO().registrarPedido("", 1, 10, LocalDateTime.now(), LocalDateTime.now(),
 				"esto es un comentario", "atico", 50.0, 21, LocalDateTime.now(), l) != null);
 		assertTrue(servicio.editarEstado("pedidoA", TipoEstado.ACEPTADO, LocalDateTime.now()) != null);
 		assertTrue(servicio.asignarRepartidor("pedidoA", 42));

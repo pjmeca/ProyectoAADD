@@ -46,22 +46,11 @@ public class ServicioGestionPedido {
         return servicio;
     }  
     
-    public String registrarPedido(Integer usu, Integer res, LocalDateTime fH, LocalDateTime fE, String coment, String datosDir
-    		, Double importe, Integer rep, LocalDateTime fEstado, List<ItemPedido> items) {
-    	PedidoDAO ped = PedidoDAO.getPedidoDAO();
-    	Pedido p = new Pedido(getNextCodigoPedido(),usu,res,fH,fE,coment,datosDir,importe,rep,fEstado,items);
-    	if (ped.save(p) != null)
-    		return p.getCodigo();
-    	else
-    		return null;
-    	
-    }
-    
     public boolean crearPedido(Integer usu, Integer res, LocalDateTime fH, LocalDateTime fE, String coment, String datosDir
     		, Double importe, List<ItemPedido> items) {
         //se crea un pedido, este método deberá tener los atributos necesarios
     	
-    	String id = registrarPedido(usu, res, fH, fE, coment, datosDir, importe, 0, fH, items);
+    	String id = PedidoDAO.getPedidoDAO().registrarPedido(getNextCodigoPedido(), usu, res, fH, fE, coment, datosDir, importe, 0, fH, items);
     	
         //una vez creado, nos quedamos con el id que le ha generado mongodb y con eso activamos el timer
         if (id != null)
