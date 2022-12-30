@@ -107,7 +107,10 @@ public class PedidoDTO implements Serializable{
 			return estados; 
 		}
 		
-		public void setEstado(String estado) {
+		/*
+		 * Comprueba si el estado es un estado siguiente válido.
+		 */
+		public boolean isEstadoValido(String estado) {
 			List<String> siguienteEstado = getSiguientesEstados();
 			
 			boolean valido = false;
@@ -116,11 +119,16 @@ public class PedidoDTO implements Serializable{
 					valido = true;
 			}
 			
-			if(!valido)
-				throw new IllegalStateException("No es posible cambiar del estado actual al estado: "+estado);
+			return valido;
 		}
 		
-		public void addEstado(EstadoPedido estado) {
+		/*
+		 * Cambia el estado del pedido, lanza una excepción si no es un estado válido.
+		 */
+		public void cambiarAEstado(EstadoPedido estado) {
+			if(!isEstadoValido(estado.getEstado()))
+				throw new IllegalStateException("No es posible cambiar del estado actual al estado: "+estado);
+			
 			estados.add(estado);
 		}
 }

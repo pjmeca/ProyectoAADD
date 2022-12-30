@@ -39,8 +39,9 @@ public class GestionarPedidosWeb implements Serializable {
 	}
 	
 	public void setEstado(PedidoDTO pedido, String estado) {
-		pedido.setEstado(estado);
-		pedido.addEstado(ServicioGestionPedido.getServicioGestionPedido().editarEstado(pedido.getCodigo(), TipoEstado.valueOf(estado), LocalDateTime.now()));
+		if(pedido.isEstadoValido(estado))
+			pedido.cambiarAEstado(ServicioGestionPedido.getServicioGestionPedido().editarEstado(pedido.getCodigo(), TipoEstado.valueOf(estado), LocalDateTime.now()));
+		
 		try {
             String contextoURL = facesContext.getExternalContext().getApplicationContextPath();
             facesContext.getExternalContext().redirect(contextoURL + "/restaurante/gestionarPedidos.xhtml");
