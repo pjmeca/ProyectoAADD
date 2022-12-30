@@ -83,7 +83,7 @@ public class PedidoDAO extends ExtensionMongoDAO<Pedido>{
 		return collection.updateOne(query, update).wasAcknowledged();
 	}
     
-    public List<PedidoDTO> getByUsuarioRestaurante(Integer codUsu, Integer codRes) {
+    public List<PedidoDTO> getByUsuarioYRestaurante(Integer codUsu, Integer codRes) {
     	Bson query = Filters.and(Filters.eq("cliente", codUsu),Filters.eq("restaurante",codRes));
     	FindIterable<Pedido> resultados = collection.find(query);
 		MongoCursor<Pedido> it = resultados.iterator();

@@ -72,7 +72,7 @@ public class ServicioGestionPedido {
     }
     
     public List<PedidoDTO> findPedidosByUsuarioYRestaurante(Integer codUsu, Integer codRes){
-    	return PedidoDAO.getPedidoDAO().getByUsuarioRestaurante(codUsu,codRes);
+    	return PedidoDAO.getPedidoDAO().getByUsuarioYRestaurante(codUsu,codRes);
     }
     
     public PedidoDTO findByCodigo(String codigo){
