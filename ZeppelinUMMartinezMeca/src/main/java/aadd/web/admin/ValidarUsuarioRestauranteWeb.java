@@ -1,13 +1,18 @@
 package aadd.web.admin;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import aadd.persistencia.dto.UsuarioDTO;
 import aadd.persistencia.jpa.dao.UsuarioDAO;
+import aadd.web.usuario.UserSessionWeb;
 import aadd.zeppelinum.ServicioGestionPlataforma;
 
 @Named("validarRestaurante")
@@ -19,12 +24,28 @@ public class ValidarUsuarioRestauranteWeb implements Serializable{
 	private List<UsuarioDTO> usuarios;
 	private List<UsuarioDTO> usuariosSeleccionados;
 	
-	public ValidarUsuarioRestauranteWeb() {
-		servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();
-	}
+	@Inject
+	private FacesContext facesContext;
+	@Inject
+	private UserSessionWeb userSessionWeb;
 	
+	@PostConstruct
 	public void init() {
 		usuarios = UsuarioDAO.getUsuarioDAO().findUsuariosNoValidadosAndTipoRestaurante();
+		
+		// Si ya ha iniciado sesión, es porque está registrando un rider, así que debe ser admin
+		if(userSessionWeb.isLogin() && !userSessionWeb.isAdmin()) {
+			try {
+	            String contextoURL = facesContext.getExternalContext().getApplicationContextPath();
+	            facesContext.getExternalContext().redirect(contextoURL);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		}
+	}
+	
+	public ValidarUsuarioRestauranteWeb() {
+		servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();
 	}
 	
 	public void validar() {

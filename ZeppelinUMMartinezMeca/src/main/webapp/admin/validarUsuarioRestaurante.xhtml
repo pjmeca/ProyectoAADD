@@ -6,11 +6,6 @@
 	template="/WEB-INF/template/template_privada.xhtml">
 	<ui:param name="menuseleccionado" value="estiloValidar" />
 	<ui:define name="title">Validar usuarios restaurante</ui:define>
-	<ui:define name="metadata">
-		<f:metadata>
-			<f:viewAction action="#{validarRestaurante.init()}" />
-		</f:metadata>
-	</ui:define>
 	<ui:define name="content">
 		<h:form id="menu">
 			<p:dataTable id="checkboxDT" var="usuario"
