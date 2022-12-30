@@ -27,7 +27,10 @@ import aadd.zeppelinum.ServicioGestionPlataforma;
 @Named
 @ViewScoped
 public class RestauranteWeb implements Serializable{
-    private Double latitudSelected;
+    
+	private static final long serialVersionUID = 1L;
+	
+	private Double latitudSelected;
     private Double longitudSelected;
     private String nombreRestaurante;
     private String calle;

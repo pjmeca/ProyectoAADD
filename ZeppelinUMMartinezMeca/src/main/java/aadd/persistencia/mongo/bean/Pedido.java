@@ -4,17 +4,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 
-import com.mongodb.client.model.geojson.Point;
-
-import aadd.persistencia.jpa.bean.Restaurante;
-import aadd.persistencia.jpa.bean.Usuario;
-import aadd.persistencia.mongo.dao.PedidoDAO;
-
 public class Pedido implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	
 	@BsonId
 	private ObjectId id;

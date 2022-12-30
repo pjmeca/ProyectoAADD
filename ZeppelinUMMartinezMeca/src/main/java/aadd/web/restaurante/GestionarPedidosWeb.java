@@ -4,15 +4,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import aadd.persistencia.dto.PedidoDTO;
 import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.jpa.dao.RestauranteDAO;
@@ -25,6 +22,8 @@ import aadd.zeppelinum.ServicioGestionPedido;
 @ViewScoped
 public class GestionarPedidosWeb implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private List<PedidoDTO> pedidos;
 	
 	@Inject

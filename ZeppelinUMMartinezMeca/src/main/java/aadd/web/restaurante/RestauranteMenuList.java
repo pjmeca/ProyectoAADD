@@ -3,24 +3,23 @@ package aadd.web.restaurante;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import aadd.persistencia.dto.PlatoDTO;
 import aadd.persistencia.dto.RestauranteDTO;
-import aadd.persistencia.jpa.bean.Plato;
-import aadd.persistencia.jpa.bean.TipoUsuario;
 import aadd.web.usuario.UserSessionWeb;
 import aadd.zeppelinum.ServicioGestionPlataforma;
 
 @Named
 @ViewScoped
 public class RestauranteMenuList implements Serializable {
-    @Inject
+
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
     private FacesContext facesContext;
     private Integer idRestaurante;
     private List<PlatoDTO> menu;

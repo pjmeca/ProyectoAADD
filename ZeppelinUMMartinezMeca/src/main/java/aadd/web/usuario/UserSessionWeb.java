@@ -11,7 +11,10 @@ import aadd.persistencia.jpa.bean.TipoUsuario;
 @Named
 @SessionScoped
 public class UserSessionWeb implements Serializable {
-    protected UsuarioDTO usuario;
+    
+	private static final long serialVersionUID = 1L;
+	
+	protected UsuarioDTO usuario;
          
     public boolean isLogin() {
         return usuario != null;

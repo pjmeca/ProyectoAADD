@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class Logout extends HttpServlet {
-    
-    public Logout() {
+
+	private static final long serialVersionUID = 1L;
+	
+	public Logout() {
         super();
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -3,7 +3,6 @@ package aadd.persistencia.mongo.dao;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;

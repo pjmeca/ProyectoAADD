@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
-
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -14,13 +13,14 @@ import org.primefaces.event.SelectEvent;
 import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.jpa.bean.CategoriaRestaurante;
 import aadd.persistencia.jpa.dao.RestauranteDAO;
-import aadd.persistencia.jpa.dao.UsuarioDAO;
 import aadd.web.usuario.UserSessionWeb;
 import aadd.zeppelinum.ServicioGestionPlataforma;
 
 @Named("editarRestaurante")
 @ViewScoped
 public class EditarRestauranteWeb implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	
 	private ServicioGestionPlataforma servicio;
 	

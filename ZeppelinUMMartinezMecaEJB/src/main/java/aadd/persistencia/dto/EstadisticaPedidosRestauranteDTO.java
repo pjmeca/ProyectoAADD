@@ -3,7 +3,10 @@ package aadd.persistencia.dto;
 import java.io.Serializable;
 
 public class EstadisticaPedidosRestauranteDTO implements Serializable{ 
-    private String nombre;
+    
+	private static final long serialVersionUID = 1L;
+	
+	private String nombre;
     private Integer numPedidos;
     
     public EstadisticaPedidosRestauranteDTO(String nombre, Integer numPedidos) {

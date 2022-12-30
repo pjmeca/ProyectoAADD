@@ -3,20 +3,14 @@ package aadd.persistencia.mongo.dao;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
-
-import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
-
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
@@ -25,12 +19,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Indexes;
 import com.mongodb.client.model.Updates;
-
 import aadd.persistencia.dto.PedidoDTO;
-import aadd.persistencia.dto.UsuarioDTO;
-import aadd.persistencia.jpa.bean.Usuario;
 import aadd.persistencia.mongo.bean.EstadoPedido;
 import aadd.persistencia.mongo.bean.Pedido;
 import aadd.persistencia.mongo.bean.TipoEstado;

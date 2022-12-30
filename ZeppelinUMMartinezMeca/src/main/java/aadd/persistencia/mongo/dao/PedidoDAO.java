@@ -3,19 +3,12 @@ package aadd.persistencia.mongo.dao;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
-
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Indexes;
 import com.mongodb.client.model.Updates;
-
 import aadd.persistencia.dto.PedidoDTO;
-import aadd.persistencia.dto.UsuarioDTO;
-import aadd.persistencia.jpa.bean.Usuario;
 import aadd.persistencia.mongo.bean.EstadoPedido;
 import aadd.persistencia.mongo.bean.ItemPedido;
 import aadd.persistencia.mongo.bean.Pedido;

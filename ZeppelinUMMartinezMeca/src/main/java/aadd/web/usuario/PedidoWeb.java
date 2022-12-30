@@ -7,24 +7,24 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import aadd.persistencia.dto.PlatoDTO;
 import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.mongo.bean.ItemPedido;
-import aadd.persistencia.mongo.bean.Pedido;
 import aadd.zeppelinum.ServicioGestionPedido;
 import aadd.zeppelinum.ServicioGestionPlataforma;
 
 @Named
 @SessionScoped
 public class PedidoWeb implements Serializable {
-    @Inject
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
     private FacesContext facesContext;
     private Integer idRestaurante;
     private List<ItemPedido> items;

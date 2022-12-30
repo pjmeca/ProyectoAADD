@@ -1,14 +1,14 @@
 package aadd.persistencia.mongo.bean;
 
 import java.io.Serializable;
-
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
-
-import aadd.persistencia.jpa.bean.Plato;
 import aadd.persistencia.jpa.dao.PlatoDAO;
 
 public class ItemPedido implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
 	@BsonId
 	private ObjectId id;
 	private Integer cantidad;

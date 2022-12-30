@@ -16,6 +16,8 @@ import aadd.zeppelinum.ServicioGestionPlataforma;
 @ViewScoped
 public class BuscadorRestaurantesWeb implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private ServicioGestionPlataforma servicio;
 	
 	private List<RestauranteDTO> restaurantes;

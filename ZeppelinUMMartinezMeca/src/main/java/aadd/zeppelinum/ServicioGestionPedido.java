@@ -4,21 +4,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import aadd.persistencia.dto.PedidoDTO;
-
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
-
 import aadd.persistencia.mongo.bean.EstadoPedido;
 import aadd.persistencia.mongo.bean.ItemPedido;
 import org.bson.types.ObjectId;
-import aadd.persistencia.mongo.bean.Pedido;
 import aadd.persistencia.mongo.bean.TipoEstado;
-import aadd.persistencia.dto.IncidenciaDTO;
 import aadd.persistencia.dto.OpinionDTO;
 import aadd.persistencia.jpa.EntityManagerHelper;
 import aadd.persistencia.jpa.bean.Restaurante;
 import aadd.persistencia.jpa.bean.Usuario;
-import aadd.persistencia.jpa.dao.IncidenciaDAO;
 import aadd.persistencia.jpa.dao.RestauranteDAO;
 import aadd.persistencia.jpa.dao.UsuarioDAO;
 import aadd.persistencia.mongo.bean.Opinion;

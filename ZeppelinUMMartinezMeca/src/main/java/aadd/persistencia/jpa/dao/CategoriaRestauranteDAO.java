@@ -1,10 +1,7 @@
 package aadd.persistencia.jpa.dao;
 
 import java.util.List;
-
 import javax.persistence.Query;
-
-import aadd.persistencia.dto.PlatoDTO;
 import aadd.persistencia.jpa.EntityManagerHelper;
 import aadd.persistencia.jpa.bean.CategoriaRestaurante;
 

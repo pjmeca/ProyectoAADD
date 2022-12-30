@@ -3,25 +3,23 @@ package aadd.web.usuario;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
-
 import aadd.persistencia.dto.PedidoDTO;
 import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.dto.UsuarioDTO;
-import aadd.persistencia.mongo.bean.Pedido;
 import aadd.zeppelinum.ServicioGestionPedido;
 import aadd.zeppelinum.ServicioGestionPlataforma;
 
 @Named("crearIncidenciaWeb")
 @ViewScoped
 public class CrearIncidenciaWeb implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private ServicioGestionPlataforma servicio;
 	

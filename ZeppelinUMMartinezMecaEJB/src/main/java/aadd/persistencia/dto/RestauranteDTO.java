@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 public class RestauranteDTO implements Serializable{
 
-    protected Integer id;
+	private static final long serialVersionUID = 1L;
+	
+	protected Integer id;
     protected String nombre;
     protected Double valoracionGlobal;  
     

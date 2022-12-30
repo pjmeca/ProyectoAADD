@@ -18,6 +18,8 @@ import aadd.zeppelinum.ServicioGestionPlataforma;
 @Named("validarRestaurante")
 @ViewScoped
 public class ValidarUsuarioRestauranteWeb implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	
 	private ServicioGestionPlataforma servicio;
 	

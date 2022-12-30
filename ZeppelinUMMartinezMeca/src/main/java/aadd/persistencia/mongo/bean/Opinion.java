@@ -6,7 +6,9 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 
 public class Opinion implements Serializable{
-    
+
+	private static final long serialVersionUID = 1L;
+	
 	@BsonId
     private ObjectId id;
     private Integer usuario;

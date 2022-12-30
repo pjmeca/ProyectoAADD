@@ -1,9 +1,7 @@
 package aadd.persistencia.jpa.dao;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
@@ -13,7 +11,6 @@ import org.eclipse.persistence.config.QueryHints;
 import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.jpa.EntityManagerHelper;
 import aadd.persistencia.jpa.bean.Restaurante;
-import aadd.persistencia.jpa.bean.Usuario;
 
 @Singleton(name = "RestauranteDAO")
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)

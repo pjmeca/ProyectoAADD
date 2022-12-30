@@ -18,6 +18,8 @@ import aadd.zeppelinum.ServicioGestionPlataforma;
 @Named("gestionarIncidenciasWeb")
 @ViewScoped
 public class GestionarIncidenciasWeb implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	
 	private ServicioGestionPlataforma servicio;
 	

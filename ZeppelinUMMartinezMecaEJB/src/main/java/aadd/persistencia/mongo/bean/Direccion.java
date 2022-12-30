@@ -9,6 +9,8 @@ import com.mongodb.client.model.geojson.Point;
 
 public class Direccion implements Serializable{    
 
+	private static final long serialVersionUID = 1L;
+	
 	@BsonId
     private ObjectId id;
     private Integer restaurante;

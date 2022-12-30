@@ -17,6 +17,9 @@ import aadd.zeppelinum.ServicioGestionPlataforma;
 @Named
 @ViewScoped
 public class RegistroWeb implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String nombre;
 	private String apellidos;
 	private String correo;

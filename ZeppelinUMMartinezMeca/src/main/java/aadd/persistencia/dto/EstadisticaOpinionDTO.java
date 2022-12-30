@@ -3,7 +3,10 @@ package aadd.persistencia.dto;
 import java.io.Serializable;
 
 public class EstadisticaOpinionDTO implements Serializable{ 
-    private Double nota;
+    
+	private static final long serialVersionUID = 1L;
+	
+	private Double nota;
     private Integer total;
     
     public EstadisticaOpinionDTO(Double nota, Integer total) {

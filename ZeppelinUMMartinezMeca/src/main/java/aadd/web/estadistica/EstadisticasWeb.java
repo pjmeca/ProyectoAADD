@@ -32,7 +32,10 @@ import aadd.zeppelinum.ServicioGestionPlataforma;
 @Named
 @ViewScoped
 public class EstadisticasWeb implements Serializable {
-    @Inject
+    
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
     protected UserSessionWeb usuarioSesion;
     protected ServicioGestionPlataforma servicioPlataforma;
     private LineChartModel lineModel;

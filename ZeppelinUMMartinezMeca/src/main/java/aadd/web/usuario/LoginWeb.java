@@ -17,7 +17,9 @@ import aadd.zeppelinum.ServicioGestionPlataforma;
 @ViewScoped
 public class LoginWeb implements Serializable{
 
-    protected String email;
+	private static final long serialVersionUID = 1L;
+	
+	protected String email;
     protected String password;
     protected String redirect;
     @Inject
