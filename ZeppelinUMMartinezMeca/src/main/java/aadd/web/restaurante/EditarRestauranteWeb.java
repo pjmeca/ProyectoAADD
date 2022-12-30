@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
+
+import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -12,6 +14,8 @@ import org.primefaces.event.SelectEvent;
 import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.jpa.bean.CategoriaRestaurante;
 import aadd.persistencia.jpa.dao.RestauranteDAO;
+import aadd.persistencia.jpa.dao.UsuarioDAO;
+import aadd.web.usuario.UserSessionWeb;
 import aadd.zeppelinum.ServicioGestionPlataforma;
 
 @Named("editarRestaurante")
@@ -28,6 +32,20 @@ public class EditarRestauranteWeb implements Serializable{
 	
 	@Inject
     private FacesContext facesContext;
+	@Inject
+	private UserSessionWeb userSessionWeb;
+	
+	@PostConstruct
+	public void init() {
+		if(userSessionWeb.isLogin() && !userSessionWeb.isRestaurante()) {
+			try {
+	            String contextoURL = facesContext.getExternalContext().getApplicationContextPath();
+	            facesContext.getExternalContext().redirect(contextoURL);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		}
+	}
 	
 	public EditarRestauranteWeb() {
         servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();
