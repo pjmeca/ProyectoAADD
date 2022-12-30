@@ -33,7 +33,6 @@ public class ValidarUsuarioRestauranteWeb implements Serializable{
 	public void init() {
 		usuarios = UsuarioDAO.getUsuarioDAO().findUsuariosNoValidadosAndTipoRestaurante();
 		
-		// Si ya ha iniciado sesión, es porque está registrando un rider, así que debe ser admin
 		if(userSessionWeb.isLogin() && !userSessionWeb.isAdmin()) {
 			try {
 	            String contextoURL = facesContext.getExternalContext().getApplicationContextPath();
