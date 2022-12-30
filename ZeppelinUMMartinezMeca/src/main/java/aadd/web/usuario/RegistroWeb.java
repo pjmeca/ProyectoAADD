@@ -1,8 +1,10 @@
 package aadd.web.usuario;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -24,6 +26,21 @@ public class RegistroWeb implements Serializable {
 	private String tipo;
 	@Inject
 	protected FacesContext facesContext;
+	@Inject
+	private UserSessionWeb userSessionWeb;
+	
+	@PostConstruct
+	public void init() {
+		// Si ya ha iniciado sesión, es porque está registrando un rider, así que debe ser admin
+		if(userSessionWeb.isLogin() && !userSessionWeb.isAdmin()) {
+			try {
+	            String contextoURL = facesContext.getExternalContext().getApplicationContextPath();
+	            facesContext.getExternalContext().redirect(contextoURL);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		}
+	}
 
 	public void registro() {
 		// Comprobar que los campos no están vacíos
