@@ -351,6 +351,10 @@ public class ServicioGestionPlataforma {
 		return RestauranteDAO.getRestauranteDAO().findRestaurantesDisponibles();
 	}
 	
+	public List<RestauranteDTO> getRestaurantesByUsuarioResponsable(Integer idResponsable) {
+		return RestauranteDAO.getRestauranteDAO().findRestaurantesByUsuarioResponsableId(idResponsable);
+	}
+	
 	public List<Integer> getIdUsuariosByTipo(List<TipoUsuario> tipos){
 	    return UsuarioDAO.getUsuarioDAO().findIdsByTipo(tipos);
 	}

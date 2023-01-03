@@ -45,11 +45,11 @@ public class EditarRestauranteWeb implements Serializable{
 	            e.printStackTrace();
 	        }
 		}
+		restaurantes = servicio.getRestaurantesByUsuarioResponsable(userSessionWeb.getUsuario().getId());
 	}
 	
 	public EditarRestauranteWeb() {
-        servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();
-        restaurantes = servicio.getRestaurantesDisponibles();
+        servicio = ServicioGestionPlataforma.getServicioGestionPlataforma();        
     }
 
 	public void onRowSelect(SelectEvent<RestauranteDTO> event) {
