@@ -55,12 +55,12 @@
                 <p:outputPanel id="nuevo" style="margin: 10px;">
                     <h:panelGrid columns="2">
                         <h:outputText value="Título" />
-                        <h:inputText value="#{restauranteMenuList.titulo}" />
+                        <h:inputText value="#{restauranteMenuList.titulo}" required="true"/>
                         <h:outputText value="Descripción" />
 						<h:inputTextarea value="#{restauranteMenuList.descripcion}"
 							rows="5" />
 						<h:outputText value="Precio" />
-                <p:inputNumber value="#{restauranteMenuList.precio}" decimalPlaces="2" />
+                <p:inputNumber value="#{restauranteMenuList.precio}" decimalPlaces="2" required="true"/>
                     <p:commandButton value="Cerrar" onclick="PF('nuevoPlato').hide();" />
                         <p:commandButton value="Crear plato" icon="fa fa-bowl-food"
                             actionListener="#{restauranteMenuList.crearPlato()}"
