@@ -30,17 +30,17 @@ Crear restaurante
 				<p:outputPanel id="nuevoRestaurante" style="margin: 10px;">
 					<h:panelGrid columns="2">
 						<h:outputText value="Nombre restaurante" />
-						<p:inputText value="#{restauranteWeb.nombreRestaurante}" />
+						<p:inputText value="#{restauranteWeb.nombreRestaurante}" required="true"/>
 						<h:outputText value="Latitud" />#{restauranteWeb.latitudSelected}
 	                    <h:outputText value="Longitud" />#{restauranteWeb.longitudSelected}
 	                    <h:outputText value="Calle" />
-						<p:inputText value="#{restauranteWeb.calle}" />
+						<p:inputText value="#{restauranteWeb.calle}" required="true"/>
 						<h:outputText value="Número" />
-						<p:inputNumber value="#{restauranteWeb.numero}" decimalPlaces="0" />
+						<p:inputNumber value="#{restauranteWeb.numero}" decimalPlaces="0" required="true"/>
 						<h:outputText value="Código postal" />
-						<p:inputText value="#{restauranteWeb.codigoPostal}" />
+						<p:inputText value="#{restauranteWeb.codigoPostal}" required="true"/>
 						<h:outputText value="Ciudad" />
-						<p:inputText value="#{restauranteWeb.ciudad}"></p:inputText>
+						<p:inputText value="#{restauranteWeb.ciudad}" required="true"></p:inputText>
 
 						<h:outputText value="Categorías" />
 						<p:selectManyMenu id="categorias"

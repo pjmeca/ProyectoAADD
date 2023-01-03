@@ -93,6 +93,11 @@ public class RestauranteWeb implements Serializable{
     }
 
     public void crearRestaurante() {
+    	if (nombreRestaurante.isBlank() || calle.isBlank() || codigoPostal.isBlank() || ciudad.isBlank() || numero>0) {
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El restaurante no se ha podido crear", ""));
+            return;
+    	}
+    	
     	ArrayList<Integer> categoriasSelectedInt = new ArrayList<>();
 		for(CategoriaRestaurante c : categoriasSelected)
 			categoriasSelectedInt.add(c.getId());
