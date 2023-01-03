@@ -9,7 +9,7 @@ import javax.persistence.*;
     @NamedQuery(name = "Plato.findPlatosDisponiblesByRestaurante", query = " SELECT p FROM Plato p WHERE p.disponibilidad = true and p.restaurante.id = :restaurante "),
     @NamedQuery(name = "Plato.findPlatosByRestaurante", query = " SELECT p FROM Plato p WHERE p.restaurante.id = :restaurante "),
     @NamedQuery(name = "Plato.findPlatoById", query = " SELECT p FROM Plato p WHERE p.id = :id "),
-    @NamedQuery(name = "Plato.getRestaurantesByPlatosDisponibles", query = " SELECT p.restaurante FROM Plato p WHERE p.disponibilidad = true ")
+    @NamedQuery(name = "Plato.getRestaurantesByPlatosDisponibles", query = " SELECT DISTINCT p.restaurante FROM Plato p WHERE p.disponibilidad = true ")
 })
 public class Plato implements Serializable {
 	
