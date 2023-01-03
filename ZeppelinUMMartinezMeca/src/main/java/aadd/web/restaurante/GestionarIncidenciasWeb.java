@@ -2,6 +2,7 @@ package aadd.web.restaurante;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -12,6 +13,7 @@ import org.primefaces.event.SelectEvent;
 import aadd.persistencia.dto.IncidenciaDTO;
 import aadd.persistencia.dto.RestauranteDTO;
 import aadd.persistencia.dto.UsuarioDTO;
+import aadd.persistencia.jpa.dao.RestauranteDAO;
 import aadd.web.usuario.UserSessionWeb;
 import aadd.zeppelinum.ServicioGestionPlataforma;
 
@@ -50,7 +52,13 @@ public class GestionarIncidenciasWeb implements Serializable{
 		
 		assert(sesionWeb.isRestaurante());
         UsuarioDTO u  = sesionWeb.getUsuario();
-        incidencias = servicio.findIncidenciasAbiertasByRestaurante(u.getId());
+        
+        // Recuperar todos los restaurantes
+        List<RestauranteDTO> restaurantes = RestauranteDAO.getRestauranteDAO().findRestaurantesByUsuarioResponsableId(u.getId());
+		incidencias = new ArrayList<>();
+		// Y añadir sus incidencias
+		for(RestauranteDTO r : restaurantes)
+			incidencias.addAll(servicio.findIncidenciasAbiertasByRestaurante(r.getId()));
 	}
 
 	public void onRowSelect(SelectEvent<RestauranteDTO> event) {
